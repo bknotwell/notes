@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       13DF6AA1-3E64-4156-8F82-8873DE692498
+:END:
+#+title: Quip API access
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Accessing [[https://www.quip.com][Quip]] using the [[https://quip.com/dev/automation/documentation/current][API]] is really easy:
+- create a [[https://quip.com/api/personal-token][personal access token.]]  *NB:* ensure to store it somewhere
+  safe.
+- make calls to the API either directly (see below) or via their
+  [[https://github.com/quip/quip-api/tree/master/python][quip-api/python at master · quip/quip-api]] library.
+
+For experimenting or in shell scripts, commands like the following
+will work:
+#+begin_src 
+curl -X GET -H 'Authorization: Bearer *personal-access-token-goes-here*' 'https://platform.quip.com/1/threads/search?query=astringtoquery'
+#+end_src
+
+[[file:sitemap.org][Sitemap]]
+

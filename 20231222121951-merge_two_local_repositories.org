@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       552A00DF-F891-4408-A4C6-0E850523A76A
+:END:
+#+title: Merge two local repositories
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Link the repositories:
+
++ =git remote add local ../otherrepo=
++ =git fetch local=
++ =git merge local/master=
+
+[[id:624BDDDE-3431-4F9F-85C0-D063307C0C37][Git tips]]
+
+[[file:sitemap.org][Sitemap]]
+

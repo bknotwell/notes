@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       3BBD8789-4A84-418D-885E-ECC4C31E2DF3
+:END:
+#+title: Simple docker build routine
+#+OPTIONS: ^:nil author:nil html-postamble:nil toc:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Using Docker to build can be super-easy with GNU make (*NB:* assume the
+/Dockerfile/ copies data into the build and two files--/t.py/ and
+/t2.py/--are generated).
+
+#+begin_src shell
+IMAGE=builder
+OUTDIR=$(IMAGE)-files
+
+define CP
+(cd $(OUTDIR); docker cp $(IMAGE).$2:/tmp/$1 .)
+endef
+
+all: delete-container
+
+copy-out-files: create-container
+        mkdir -p $(IMAGE)-files
+        $(call CP,t.py,$$PPID)
+        $(call CP,t2.py,$$PPID)
+
+create-container:
+        docker create --name $(IMAGE).$$PPID $(IMAGE)
+
+delete-container:
+        docker rm $(IMAGE).$$PPID
+
+build-image:
+        docker build -t $(IMAGE) .
+
+clean:
+        rm -fr $(IMAGE)-files
+
+cleanimage:
+        -docker image rm $(IMAGE) 2>/dev/null
+
+cleanall:
+        make clean
+        make cleanimage
+
+.PHONY: build-image clean cleanall cleanimage
+#+end_src
+
+[[file:sitemap.org][Sitemap]]

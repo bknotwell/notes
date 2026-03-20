@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       b440d7cc-3d62-4872-b77e-c736d05c01e5
+:END:
+#+title: Converting newlines to an escaped newline character
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Trickier than expected:
+
+#+begin_src sh :export s code
+# substitute the newline with \n and remove the newlines
+sed 's/$/\n/'  | tr -d '\n'
+#+end_src
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]
+

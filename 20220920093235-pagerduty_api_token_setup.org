@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       F2146821-610C-432B-AA01-E634A03702E2
+:END:
+#+title: PagerDuty API token setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+From your main PagerDuty login, click the user icon and select /My
+Profile/.  From the /User Settings/ tab, you will see a /Create API User
+Token/ button.
+
+*NB:* this area also allows you to delete a token that's no longer
+needed.
+
+[[file:sitemap.org][Sitemap]]
+

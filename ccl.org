@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       F51A27A8-0D11-4CC0-9AB5-18B2194964A8
+:END:
+#+TITLE:  Installing Clozure Common Lisp
+#+SETUPFILE: ./latexcss.theme
+#+OPTIONS:  author:nil ^:nil html-postamble:nil
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Notes on installing:  [[https://github.com/Clozure/ccl/releases/tag/v1.12][v1.12 CCL]]
+
+Commands for an initial install:
+1. =git clone https://github.com/Clozure/ccl.git ccl-dev=
+2.  =curl -L -O
+   https://github.com/Clozure/ccl/releases/download/v1.12/darwinx86.tar.gz= 
+3. =cd ccl-dev=
+4. =tar -xvf ../darwinx86.tar.gz=
+
+Rebuild the entire system:
+
+1. =./dx86cl64=
+2. From the REPL, issue the following command:  =(rebuild-ccl :full t)= 
+3. After about one minute, type =(quit)=.
+
+Or use a script like the following:
+#+BEGIN_SRC sh
+./dx86cl64<<EOF
+(rebuild-ccl :full t)
+(quit)
+EOF
+#+END_SRC
+
+When you're done, you'll have a new =dx86cl64= executable as well as a
+corresponding memory image (=dx86cl64.image=). 
+
+
+[[file:sitemap.org][Sitemap]]

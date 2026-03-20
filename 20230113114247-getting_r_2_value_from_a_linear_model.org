@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       6AD76091-1A9B-46A2-9602-5DAA330C6C30
+:END:
+#+title: Getting R^2 value from a linear model
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Accessing the $R^2$ value from a linear model =m=: =summary(m)$r.squared=.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

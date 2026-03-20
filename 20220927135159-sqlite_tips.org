@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       0136C69A-A064-4DC8-8AE9-E00C5BEEB996
+:END:
+#+title: SQLite tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Accumulate small snippets of [[https://www.sqlite.org][SQLite]] tips:
++ [[id:45E9CA53-9286-458A-9BFB-3DE73624F2CD][SQLite table to CSV]]
++ [[id:1D29150A-5838-4FE6-BD0F-6F508DAFE041][SQLite upsert]]
++ [[id:2F069E17-1F9D-4406-8044-4583A7F8DEA2][JSON with SQLite]]
++ [[id:5B913FD2-F70F-485A-9C76-CD4CC669D8B5][SQLite virtual columns with indices]]
++ [[id:FDFDBA1F-65AB-4E4D-8103-6EF4EDC59711][SQLite full-text search]]
++ [[id:AA2378F4-165B-4B36-AE0E-2921F9184D22][SQLite as a data validator]]
++ [[id:C973F27A-C9EC-45D0-936B-A8307FF2C430][SQLite as a text generator]]
++ [[id:37a34012-1258-4fcb-9131-252c5d8c4777][Estimate \pi with sqlite]]
+
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,67 @@
+:PROPERTIES:
+:ID:       1E9E2FE1-BBD2-4F43-BB7A-A5D029768685
+:END:
+#+TITLE:  Notes on Prolog
+#+SETUPFILE: latexcss.theme
+#+OPTIONS:  author:nil ^:nil  html-postamble:nil
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+* Useful links
+A helpful piece on doing [[https://cse.sc.edu/~ahein/330/example.html][input, output and creating a standalone executable]] using SWI prolog.  Relevant test code:
+
+#+begin_src prolog
+child(john,sue).   child(john,sam).   
+child(jane,sue).   child(jane,sam).   
+child(sue,george).   child(sue,gina). 
+
+male(john).   male(sam).     male(george). 
+female(sue).  female(jane).  female(june). 
+
+parent(Y,X) :- child(X,Y).
+father(Y,X) :- child(X,Y), male(Y).
+opp_sex(X,Y) :- male(X), female(Y). 
+opp_sex(Y,X) :- male(X), female(Y). 
+grand_father(X,Z) :- father(X,Y), parent(Y,Z).
+
+main :-
+    nl,
+    write('>   Enter a selection followed by a period.'), nl,
+    write('>   1. Print all males'), nl,
+    write('>   2. Print all females'), nl,
+    write('>   3. Run a query'), nl,
+    write('>   4. Exit'), nl, nl,
+    read(Choice),
+    run_opt(Choice), main.
+
+run_opt(1) :- print_males.
+
+run_opt(2) :- print_females.
+
+run_opt(3) :-
+    write('>   Enter a query followed by a period.'), nl,
+    read(Query),
+    print_query_true(Query),
+    print_query_false(Query).
+      
+run_opt(4) :- write('Goodbye'), nl, halt.
+
+run_opt(_) :- write('Invalid option'), nl, halt.
+
+print_query_true(Q) :-
+    forall(Q, writeln(true:Q)).
+print_query_false(Q) :-
+    forall(\+ Q, writeln(false:Q)).
+
+write_male(X) :- write(X), write(' is male.'), nl.
+print_males :- forall(male(X), write_male(X)).
+
+write_female(X) :- write(X), write(' is female.'), nl.
+print_females :- forall(female(X), write_female(X)).
+#+end_src
+
+can be compiled with the following command: =swipl --goal=main --stand_alone=true -O -ot -c t.pl=
+
+which will give you a dynamically-linked executable ~200KB in size.
+
+[[file:sitemap.org][Sitemap]]

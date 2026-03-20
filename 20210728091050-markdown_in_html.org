@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       89BB8246-BFB8-4707-9EAB-CB2AA8341570
+:END:
+#+title: Markdown In HTML
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+If you want to render markdown directly from a page, use [[https://ndossougbe.github.io/strapdown/][strapdown]].
+
+[[file:sitemap.org][Sitemap]]
+

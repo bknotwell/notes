@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       DA72524E-6FCA-4EE8-822E-7B130A1B0AB1
+:END:
+#+title: Code in a markdown list
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Embedding code in/immediately after a markdown list is [[https://meta.stackexchange.com/questions/3792/how-to-nest-code-within-a-list-using-markdown][tricky]] as you
+must add four additional spaces for every list nesting level.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

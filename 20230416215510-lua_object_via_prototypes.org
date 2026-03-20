@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       2983D802-839E-45A8-B671-8BF742D3BFC1
+:END:
+#+title: Lua object via prototypes
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Lua's use of prototype based inheritance relies on the [[http://www.lua.org/pil/13.4.1.html][__index]]
+metamethod:
+
+#+begin_src lua
+animal = { __index = {
+      jump = function(x) return(x.height .. ' meter') end
+  }
+}
+
+flea = {
+   init=function()
+       x = {}
+       setmetatable(x, animal)
+       x.height = .005
+       return(x)
+   end
+}
+
+human = {
+   init=function()
+       x = {}
+       setmetatable(x, animal)
+       x.height = 1
+       return(x)
+   end
+}
+
+f1 = flea:init()
+h1 = human:init()
+print(f1:jump())
+print(h1:jump())
+#+end_src
+
+[[file:sitemap.org][Sitemap]]

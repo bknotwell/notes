@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       de936055-2537-471b-8250-a83159571e78
+:END:
+#+title: List S3 bucket in R
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Install the [[https://github.com/paws-r/paws][paws]] package and run the following code to download key
+information from the bucket and store it in a file that can be reloaded:
+
+#+begin_src R :exports code
+  require(paws)
+  s3 <- paws::s3) 
+  data <- paginate(s3$list_objects(Bucket = 'my-bucket-name'))
+  rm(s3)
+  save.image(file = 'my-bucket-name-ls.RData')
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       66C4A6BF-A4A2-4BEA-BD30-AD8566631329
+:END:
+#+title: Installing Shiny Server Sample-apps
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+After doing the [[https://github.com/rstudio/shiny-server/wiki/Building-Shiny-Server-from-Source][post-install steps]], you'll want to test your
+installation:
+
+1.  =cp -r ~/shiny-server/samples /srv/shiny/server=
+2. Using a browser, visit the [[https://knotwell.net/shiny/welcome.html][welcome]] page and follow its
+   instructions.
+
+You'll also need to run the following commands to get the /hello/
+application to work:
+#+begin_src sh
+sudo mkdir /var/lib/shiny-server/bookmarks
+sudo mkdir /var/lib/shiny-server/bookmarks/shiny
+#+end_src
+
+To get the markdown panel to work, you'll need to run the following in
+an R instance executing as root: =install.packages('rmarkdown')=.  You
+will also need to remove the pandoc executable installed (it's a
+X86-64 binary) and replace it with an appropriate link:
+
+#+begin_src sh
+dnf install pandoc
+rm /usr/local/shiny-server/ext/pandoc/pandoc
+ln /bin/pandoc /usr/local/shiny-server/ext/pandoc/pandoc
+
+# optional
+# rm /usr/local/shiny-server/ext/pandoc/pandoc-citeproc
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

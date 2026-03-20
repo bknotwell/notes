@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       EDA8EA64-C137-4FE8-AFFB-F4A86DF5338E
+:END:
+#+title: R text histogram
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+
+To create a histogram suitable for inclusion in a text-only format,
+use R's [[https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/stem][stem]] function.
+
+#+begin_src R :exports both :results output
+cat(stem(rnorm(120, 100, 15)))
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

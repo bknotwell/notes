@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       05A43A24-E890-4B66-BE1A-E32D5242AA62
+:END:
+#+title: Convert svg to emf
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+[[https://inkscape.org/][Inkscape]] can be used to convert svg files to emf files with a command
+like the following:
+
+=/Applications/Inkscape.app/Contents/MacOS/inkscape td.svg
+--export-filename td.emf=
+
+*NB:* command was tested with Inkscape v1.2.
+
+
+[[file:sitemap.org][Sitemap]]
+

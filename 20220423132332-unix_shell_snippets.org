@@ -1,0 +1,104 @@
+:PROPERTIES:
+:ID:       6FECFB5F-F039-4E71-BAE3-C237A41FC6AB
+:END:
+#+title: Unix shell snippets
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Some Unix shell idioms.  Goal:  remain POSIX-compliant.
+
+* Counting a number of unique items
+
+From the input below, how many are there of each entry?
+
+#+NAME: input
+#+begin_example
+hello world
+boggle
+dogs
+trashpandas
+hello world
+boggle
+dogs
+trashpandas
+hello world
+boggle
+dogs
+hello world
+boggle
+hello world
+#+end_example
+
+Use two POSIX utilities--=sort= and =uniq=--in a shell pipeline to calculate it:
+
+#+begin_src sh :stdin input :results output :exports both
+sort | uniq -c
+#+end_src
+
+Order the output from most to least frequent:
+
+#+begin_src sh :stdin input :results output :exports both
+sort | uniq -c | sort -nr
+#+end_src
+
+* Get the number of seconds since the Epoch
+
+While there are extensions to the =date= command that do this, there is
+a [[https://pubs.opengroup.org/onlinepubs/009696799/utilities/awk.html][POSIX-compliant]] method available.  From the documentation:
+
+#+begin_quote
+srand([expr])
+Set the seed value for rand to expr or use the time of day if expr is
+omitted. The previous seed value shall be returned.
+#+end_quote
+
+which means the following works:
+
+#+begin_src sh :exports both :results output
+awk 'BEGIN { srand(); print srand(); }'
+#+end_src
+
+* Create a fixed-length string with repeating characters
+
+Combine =printf= and =tr=:
+
+#+begin_src sh :exports both :results output
+header="123456"
+echo $header
+printf "%${#header}s" | tr " " "="
+#+end_src
+
+* Find a tab inserted into the last commit
+
+Find all files in a commit with a tab character.  Show the filename and line.
+
+#+begin_src sh
+git diff HEAD^ HEAD | grep '^+++' | cut -f2 -d' ' | cut -f2- -d'/' | xargs grep -n '\t'
+#+end_src
+
+* Read a password in a script
+
+Turn /echo/ off:
+
+#+begin_src sh
+TERMINALSETTINGS=$(stty -g) || exit 1
+trap 'stty "${TERMINALSETTINGS}"' EXIT INT TERM
+
+# turn echo on
+stty -echo || exit 2
+printf "Password: "
+read -r password
+
+# restore echo
+stty echo || exit 3
+#+end_src
+
+#+RESULTS:
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+[[id:A479716D-85C0-4960-9983-218DFDE7BF38][Unpack an RPM]]
+
+[[file:sitemap.org][Sitemap]]

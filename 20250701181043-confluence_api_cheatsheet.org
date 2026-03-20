@@ -1,0 +1,75 @@
+:PROPERTIES:
+:ID:       ae271f09-6203-47da-a5a5-c96953ce6cbd
+:END:
+#+title: Confluence api cheatsheet
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+Some nuggets of code that make the [[https://atlassian-python-api.readthedocs.io/confluence.html][confluence API]] approachable.
+
+** Environment setup
+
+Install [[https://pip.pypa.io/en/stable/installation/][pip]] if needed: =python3 -m ensurepip= followed by installing the [[https://pypi.org/project/atlassian-python-api/][atlassian-python-api]] module =pip3 install atlassian-python=api=.
+
+** Create a client
+
+#+begin_src  python
+from atlassian import Confluence
+
+# you may want to set verify_ssl=False or timeout=seconds
+confluence_client = Confluence(url=..., token=...)
+#+end_src
+
+** list pages in a space
+
+Confluence organizes content into [[https://support.atlassian.com/confluence-cloud/docs/create-a-space/][spaces]].  You may want to list the space's content using the [[https://developer.atlassian.com/server/confluence/advanced-searching-using-cql/][Confluence Query Language (CQL)]]:
+
+#+begin_src python
+def get_pages_from_space(space, confluence_client):
+    ids = []
+    query = (
+        f"space = '{myspace}' AND type in ('page') and lastmodified > '{mytimestamp}'"
+    )
+    index = 0
+    limit = 100
+    done = False
+    while not done:
+        res = confluence_client.cql(cql=query, start=index, limit=limit, excerpt=None,
+                                    include_archived_spaces=False, expand='body.storage,history.lastUpdate')
+        items = res['results']
+        if len(items) == 0:
+            done = True
+        else:
+            for item in items:
+                ids.append(item['content']['id'])
+            index = index + limit
+
+    return ids
+#+end_src
+
+** get page by id
+
+#+begin_src python
+def get_page_by_id(page, confluence_client):
+    return confluence_client.get_page_by_id(page.id, expand='space,body.storage,history.lastUpdated')
+#+end_src
+
+** get labels for a page
+
+#+begin_src python
+def get_page_labels(page, confluence_client):
+    index = 0
+    limit = 100
+    labels = []
+    done = False
+     while not done:
+        res = confluence_client.get_page_labels(page_id=page.id, start=index, limit=limit)
+        res_ = res.get('results', [])
+        if len(res_) == 0:
+            done = True
+        else:
+            for label in res_:
+                labels.append(label)
+            index = index + limit
+     return labels                  
+#+end_src

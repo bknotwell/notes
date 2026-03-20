@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       67cf88ac-a64b-4ab3-8f38-23ad6235b91a
+:END:
+#+title: ed tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+* Background
+The original Unix text editor is [[https://en.wikipedia.org/wiki/Ed_(software)][ed]].  It's worth knowing even if you
+use it infrequently.  Start with the [[https://man.freebsd.org/cgi/man.cgi?query=ed&sektion=1&format=html][manpage]] or  Michael Lucas'
+[[https://www.amazon.com/Ed-Mastery-Standard-Unix-Editor/dp/1642350036][book.]] 
+
+* Examples
+** Insert data starting on the second line
+#+begin_src sh
+# insert new rows in a CSV file after the header
+ed -s<<EOF
+E t.csv
+2i
+100,101,102
+103,104,105
+.
+wq
+EOF
+# 
+#+end_src
+
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]
+

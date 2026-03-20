@@ -1,0 +1,70 @@
+:PROPERTIES:
+:ID:       0bc4533f-7f14-4201-a271-604285ff4e3c
+:END:
+#+title: Shiny on Heroku
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Making a [[https://shiny.posit.co/][Shiny]] app on [[https://www.john-mcallister.com/deploy-r-shiny-applications-on-heroku/][heroku]] can be easily done but heroku serves up
+traffic on port 80 and 443.  An application hooks the [[https://shiny.posit.co/r/articles/build/js-events/][shiny:connected]]
+event to ensure all traffic's encrypted using HTTPS. 
+
+Example code below:
+
+#+begin_src R
+library(shiny)
+
+jscode <- "
+$(document).on('shiny:connected', function(event) {
+     if(location.protocol !== 'https:') {
+         location.replace(`https:${location.href.substring(location.protocol.length)}`);
+     }
+});
+"
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+    tags$head(tags$script(jscode)),
+
+    # Application title
+    titlePanel("Old Faithful Geyser Data"),
+
+    # Sidebar with a slider input for number of bins
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1,
+                        max = 50,
+                        value = 30)
+        ),
+       # Show a plot of the generated distribution
+       mainPanel(
+           plotOutput("distPlot"),
+           textOutput('summary')
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output, session) {
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+         # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    })
+    output$summary <- renderText({
+      print('hello world')
+    })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+[[file:sitemap.org][Sitemap]]

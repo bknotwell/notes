@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       79217A40-2AF9-4680-8EEF-5DFC7115F443
+:END:
+#+title: Table Spreadsheet Editing
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Editing per cell table formulas can be done far more easily by doing
+them in the formula editor:
+
+1. Hit {Ctrl c '} to open the editor.
+2. Use normal editing to update individual cells.
+3. Hit {Ctrl c c} to exit the table editor back to org mode.
+4. Hit {Ctrl c c} again to recalculate the table's changes. 
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]

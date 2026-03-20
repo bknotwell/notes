@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       CB35929A-53B2-47D3-8AF6-B76F39FAEBCB
+:END:
+#+title: Notes publishing Makefile
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Generating and publishing notes is done with a combination of emacs
+lisp, shell commands and [[https://www.gnu.org/software/make/][gmake]]:
+
+#+begin_src makefile
+  EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+  SCRIPT=~/roam/index-content.el
+
+  define PUBLISH
+      ssh $(1) rm /var/www/roam/*.html /var/www/roam/*.svg
+      scp *.html $(1):/var/www/roam
+      scp *.svg $(1):/var/www/roam
+      scp t.db $(1):/var/www/roam
+      ssh $(1) sudo  cp /var/www/roam/t.db /srv/shiny-server/notes-search/t.db 
+      ssh $(1) sudo chown $(2) /var/www/roam/*.html /var/www/roam/*.svg
+  endef
+
+  all: publish-content
+
+  publish-content: publish-myfree1 publish-beastie
+
+  publish-beastie: gen-content
+      $(call PUBLISH, beastie, www)
+
+  publish-myfree1: gen-content
+      $(call PUBLISH, myfree1, nginx)
+
+  gen-content:
+      rm t.db
+      $(EMACS) -q  --script $(SCRIPT)
+      mv ../roam/*.svg .
+
+  .PHONY: gen-content
+
+#+end_src
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[id:D5AE48C4-D509-4C74-B872-56AB6FC9AC4C][Org-roam setup for publishing]]
+
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,345 @@
+:PROPERTIES:
+:ID:       451780DB-23D4-4C57-AB60-BEC644249E62
+:END:
+#+title: jq examples
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Complex [[https://stedolan.github.io/jq/][jq]] examples aren't easy to find.
+
+* SQL converter
+
+Creates a table with all the keys (assumes flat JSON) and loads the
+table with each row.
+
+#+begin_src jq
+def cvtval($value):
+  $value | type | (if .   == "string" then ("'" + $value + "'")
+                   elif . == "boolean" and $value == "false"  then 0
+                   elif . == "boolean" and $value == "true"   then 1
+                   elif . == "number" then  $value
+                   else . end)
+;
+
+def cvt(value):
+   value | type | (if .   == "string" then "TEXT"
+                   elif . == "boolean" then "INTEGER"
+                   else . end)
+
+
+(.[0] | ("CREATE TABLE IF NOT EXISTS ", $tblname, " (\n",
+         "\t id INTEGER PRIMARY KEY AUTOINCREMENT\n"),
+         (to_entries \[] | ("\t,", .key, "\t", cvt(.value), "\n")),
+(.[] | ("INSERT INTO", $tblname, " VALUES(null",
+        (to_entries[] | (",", cvtval(.value))),
+       ");\n"))
+#+end_src
+
+* Find duplicates in an array
+
+Finding entries with duplicate /Timestamp/ elements (*NB:* converted from
+milliseconds to seconds):
+
+=jq '[.[] | ._source.Timestamp / 1000 | round] | sort | group_by(.) | map(select(length > 1) | .[0])=
+
+* Combine multiple files into a single array
+
+=jq -n '{ policies: [inputs.policies] | add}' files=
+
+* Create a CSV
+Creates the headers using the first object.
+
+=jq -r '(.policies[0] | keys_unsorted | @csv), (.policies[] | map(.) | @csv'=
+
+** A CSV without JSON input
+
+/jq/ can be used to generate well-formed CSV in a simple way:
+
+=jq -rn --arg myarg "$myarg" --arg myarg2 "$myarg2" '[$myarg, $myarg2] | @csv=
+
+* Match specific data
+
+=jq -s '.[].collectors | .[] | select(.collectorVersion |
+contains("19.227-22")) | .id'=
+
+Another example:
+
+=jq -rq '.[].result | select(.message | test("IllegalStateException")).message'=
+
+* Match multiple fields
+=jq '[].collectors | .[] | select(.collectorVersion === ="19.386-16" and (.name |
+match("^myprefix")))'=
+
+* Join an array together
+=jq -r '.data[] | [.firstName, .lastName, .email, (.roleIds | join(" "))'=
+
+* Iterate over an array with access to the index
+
+From an incoming array:
+#+begin_example
+[
+   {"a": 44}, {"a": 33}, {"a": 55},{"a": 66},
+   {"a": 21}, {"a": 82}, {"a": 21},{"a": 36},
+   {"a": 26}, {"a": 18}
+]
+#+end_example
+
+Generate conditionally different output:
+#+begin_example
+sleep 44&
+sleep 33&
+sleep 55&
+sleep 66&
+wait
+sleep 21&
+sleep 82&
+sleep 21&
+sleep36&
+wait
+sleep 26&
+sleep 18&
+wait
+#+end_example
+
+Use jq's =foreach= capability to augment the incoming array with an =idx= element:
+#+begin_src jq
+([foreach .[] as $i (0; . + 1; $i + {"idx": .})] | .[] |
+   "sleep ", .a, "&\n", if .idx % 4 == 0 then "wait\n" else "" end), "wait\n"
+#+end_src
+
+The trailing =wait= is handled separately.
+
+* Selects w/negation
+
+#+begin_src shell
+jq -rj '.defs[] |
+    (select(.description | startswith("SomeThing") | not) |
+               "Description set incorrectly:  ", .description, "\n"),
+    (select(.name | startswith("something-") | not) |
+               "Name set incorrectly:  ", .name, "\n"),
+    (select(.owner == null) |
+               "Owner unset\n"),
+    (select((.admins | length) < 1) |
+               "Admins unset or empty\n"),
+    (select((.users | length) < 1) |
+               "Users unset or empty\n"),
+    (select(.guid | test("^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}") | not) |
+               "GUID formatted incorrectly:  ", .guid, "\n")'
+#+end_src
+
+* Filtering out invalid JSON
+
+The =fromjson= function will drop a message to /stderr/ if it's given
+invalid json.  It's easy enough to filter with a pipeline like the
+following:
+
+#+begin_src sh
+jq '.result._raw | fromjson | select(.log != null) | .log | fromjson' filename
+#+end_src
+
+as the =select= drops messages that didn't parse.
+
+* Simple schema enforcement
+It's easy to write a simple schema validator instead of doing a complex validation:
+
+#+begin_src jq
+  # ensures the string variable is not set to the empty string
+  def testempty(indexname):
+     if .[indexname] == "" then "FAIL: " + indexname + " must be set" | halt_error(1) else . end
+  ;
+  # ensures the value is set to a defined value
+  def testarray(indexname; $possibilities):
+     if .[indexname] | IN($possibilities[]) | not then "FAIL: invalid or missing " + indexname | halt_error(1) else . end
+  ;
+
+  def testsource_link:
+     testempty("source-link")
+  ;
+
+  def test_source_type:
+     testarray("source-type"; ["github", "confluence", "google-drive"])
+  ;
+
+  .[] | testsource_link | test_source_type
+#+end_src
+* Select multiple with a reduction to a CSV
+
+#+begin_src shell
+(["create","build","provision", "destroy", "validate", "admin", "deprovision"] | @csv),
+([[.[].input[] | .builds[] |
+    select(.jobs != null) | .jobs[]] |
+      .[] | [([select(.type ==      "create")] | length),
+             ([select(.type ==       "build")] | length),
+             ([select(.type ==   "provision")] | length),
+             ([select(.type ==     "destroy")] | length),
+             ([select(.type ==    "validate")] | length),
+             ([select(.type ==       "admin")] | length),
+             ([select(.type == "deprovision")] | length)]] |
+   [reduce .[] as $item (0; . + $item[0]),
+    reduce .[] as $item (0; . + $item[1]),
+    reduce .[] as $item (0; . + $item[2]),
+    reduce .[] as $item (0; . + $item[3]),
+    reduce .[] as $item (0; . + $item[4]),
+    reduce .[] as $item (0; . + $item[5]),
+    reduce .[] as $item (0; . + $item[6])] | @csv)
+#+end_src
+
+* Declare functions and generate graphviz content
+
+#+begin_src shell
+#!/usr/local/bin/jq -rjsMf
+
+def singlelabel:
+  (.[0] | .),
+  (.[1:] | .[] | (" | ", .));
+
+def subnetnode:
+  "        ", (.subnet_id | split("-") | join("")), "[label=\"", .subnet_id, " | ", .cidr, "\"];\n";
+
+def subnetarc($name):
+  "        ", $name, " -> ", (.subnet_id | split("-") | join("")), "\n";
+
+def span($repr):
+    (select(. != null) | ("{ ", $repr, " | ", ., "}")),
+    (select(. == null) | ("{ ", $repr, " | ", "not set }"));
+
+("digraph service {
+   graph [rankdir=\"LR\" ]
+   subgraph cluster_team {
+        node [shape=record];
+        team[label=\""),
+(.[].team.name | span("Name"), " | "),
+(.[].team.owner | span("Owner"), " | "),
+(.[].team.email | span("Email"), " | "),
+(.[].team.slack | span("Slack"), " | "),
+(.[].team.gateway | span("gateway"), " | "),
+(.[].team.vcn_id | span("vcn-id"), " | "),
+("\"]\n   subgraph cluster_sg {\n"),
+(.[].team.sg[] | (.name as $name | 
+                               "    subgraph ", .name, " {\n",
+                                    "        ", .name,
+                                      "[label=\"", .name,
+                                    " | VCN cidr block(s)",
+                                    (.vcn_cidr_blocks[] | "       | ", .),
+                                    "\"];\n",
+  (.public_subnets[]  | subnetnode),
+  (.private_subnets[] | subnetnode),
+  (.public_subnets[]  | subnetarc($name)),
+  (.private_subnets[] | subnetarc($name)),
+"    }\n")),
+("   label=\"Security group(s)\";\n   }\n"),
+("   label=\"Team information\"\n   }\n"),
+("    subgraph cluster_Svc {\n"),
+("        node[shape=record];\n"),
+(.[].svc.type | "        service [label=\"{ Type | ", ., "}"),
+(.[].svc.assessment | " | { SA | ", ., " }"), 
+(.[].svc.owner | " | { Owner | ", ., " }"),
+(.[].svc.status | " | { Status | ", ., " }\"]\n"),
+("   subgraph cluster_listeners {\n"),
+(.[].svc.listening_ports[] | ("        subgraph cluster_", .proto, " {\n", "           label=\"", .proto, "\"\n", 
+              ("           ports_", .proto, "[label=\"", (.ports[0] | .),
+                                         (.ports[1:] | .[] | (" | ", .)),
+(              "\"]\n       }\n")))),
+("        label=\"Listeners\"\n    }\n"),
+("        label=\"SVC information\";\n"),
+("   }\n"),
+("        subgraph cluster_aws {\n"),
+("        node[shape=record];\n"),
+("        aws[label=\""),
+(.[].svc.aws_services | singlelabel),
+("\"]\n"),
+("            label=\"AWS services\"\n        }\n"),
+("        subgraph cluster_ep {\n"),
+("        node[shape=record];\n"),
+("        ep[label=\""),
+(select(.[].svc.outbound != null) | .[].svc.outbound[].dest[].ep[] | ., " | "),
+("\"]\n"),
+("            label=\"Outbound\"\n        }\n"),
+("        subgraph cluster_sd {\n"),
+("        node[shape=record];\n"),
+("        sd[label=\""),
+(.[].svc.dependencies | singlelabel),
+("\"]\n"),
+("            label=\"dependencies\"\n        }\n"),
+("service -> aws [dir=\"both\"]\n"),
+("service -> ep [dir=\"both\"]\n"),
+("sd -> service\n"),
+("}")
+#+end_src
+
+* Feeding state through and iterating by queries values
+
+Call with =--arg instance instance-name=.  The trickiest part is the
+=listeners= stanza that initially filters down to a unique protocol
+array followed with a query aggregating unique values by protocol.
+
+#+begin_src
+#!/usr/local/bin/jq -sMf
+
+.[].instances[] | select(.name == $instance) |
+    .instance as $i |
+  {
+     "vendorservices": [$i[].vendor_services[]] | sort | unique,
+     "dependencies": [$i[].dependencies[]] | sort | unique,
+     "identitygroups": [$i[].identitygroups[]] | sort | unique,
+     "listeners": [
+         [$i[].listeners[] | .protocol] | sort | unique as $protocols |
+             $protocols[] | . as $proto | {"protocol": $proto,
+                                           "ports": [$i[].listeners[] |
+             select(.protocol == $proto) | .ports] | add | sort | unique}
+     ],
+     "targets": [$i[].targets | select(. != null) | .[].destination[].tgt[]] 
+          | sort | unique
+  }
+#+end_src
+
+* Transform an incoming JSON object
+
+Taking an existing object and transforming it to a different format
+(assumes =identifier= and =email= are passed in as arguments):
+
+#+begin_src
+{
+  identifier:  $identifier,
+  email:       $email,
+  roles:  [.[] | {user: { email: .email },
+                          roles: [{name: "ADMIN"}]}]}
+#+end_src
+
+The tricky part of the above is the first array constructor that
+allows you to transform the =.[]= input as a filter.
+
+* Handling type differences for a field
+
+Input may contain fields that can have multiple types.  From a Splunk
+data export, there was an field that was almost always a string but
+occasionally would be an array.  Handling this requires the =type=
+function:
+#+begin_src
+jq -rs '.[].result | (.field | if type=="array" then .[0] else . end)' $files
+#+end_src
+
+* Small command notes
+** Streaming content from multiple identical files
+Combining multiple files returned from a paged API request into a
+single stream is handled by the =-s= option.
+
+** Streaming content from a file that contains escaped JSON content
+When downloading log events from a log aggregator (e.g. Splunk or Sumo
+Logic), you may have escaped JSON content escaped inside a larger
+file.  A command similar to the below should remedy the problem:
+
+#+begin_src
+# the file is streamed messages that need to be
+aggregated (AKA the first -s) and aggregated again (the second)
+jq -rs '.[].result.log' thelogfile.json | jq -rs '.[].message'
+#+end_src
+
+** Running a standalone program
+
+Like sed or awk, jq can be run with a shebang:  =#!/usr/local/bin/jq -rsMf=.
+
+[[file:sitemap.org][Sitemap]]
+

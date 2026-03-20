@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       e452ea12-c9f6-48a1-b2b0-1bcdc91f9a0a
+:END:
+#+title: Upgrading node POSIX fixup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+After upgrading node (might be FreeBSD-specific), shiny might have
+trouble starting because it can't find the /POSIX/ module:
+
+#+begin_example
+Error:  Cannot find module '../../build/Release/posix'
+#+end_example
+
+Remedy this by linking the /posix/build/Release/ directory to the
+/Release/ in shiny server's top-level /build/ directory:
+
+#+begin_src  sh
+cd  /usr/local/shiny-server/build
+ln -s ../node_modules/posix/build/Release Release
+#+end_src
+
+It might be necessary to rebuild the /POSIX/ module using /gmake/ from the
+/node_modules/posix/build/ directory.
+
+[[id:ED31F329-92CA-4FAB-AD9F-A7200D51CC1A][Installing Shiny Server on AARM64]]
+[[file:sitemap.org][Sitemap]]

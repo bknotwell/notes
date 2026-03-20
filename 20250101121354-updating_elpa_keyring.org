@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       be2e825e-bf98-4acd-b030-417375b908cd
+:END:
+#+title: Updating elpa keyring
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+It took a decent amount of work to get emacs' package refresh to work on Windows:
+
++ the [[https://elpa.gnu.org/packages/gnu-elpa-keyring-update.html][gnu-elpa-keyring-update]] package was installed (*NB:* this
+  required setting =package-check-signature= to =nil=).  Ideally,
+  evaluating =(gnu-elpa-keyring-update)= and the new keyring would've
+  been installed.  Unfortunately, this didn't work but it included the
+  =gnu-elpa.gpg-keyring= file which was loaded by hand in msys32.
++ the keyring needed updating (the shell block).
++ the path to the keyring needed to be set (see emacs lisp codeblock).
+
+A combination of the following
+#+begin_src sh
+gpg --homedir /c/Users/bknot/AppData/Roaming/.emacs.d/elpa/gnupg --import ../../elpa/gnu-elpa-keyring-update-2022.12.1/etc/gnu-elpa.gpg-keyring
+gpg --homedir /c/Users/bknot/AppData/Roaming/.emacs.d/elpa/gnupg --list-keys
+#+end_src
+
+The following was helped by the linked [[https://reddit.com/emacs/comments/ymzw78/windows_elpa_gnupg_and_keys_problems][thread]]:
+
+#+begin_src emacs-lisp
+;; setup gnupg path
+(setq package-gnupghome-dir "/c/Users/bknot/AppData/Roaming/.emacs.d/elpa/gnupg")
+#+end_src
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+[[file:sitemap.org][Sitemap]]

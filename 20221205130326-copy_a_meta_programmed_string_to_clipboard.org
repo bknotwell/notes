@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       644FEF58-C170-416D-AD4D-0F43BB1B7225
+:END:
+#+title: Copy a meta-programmed string to clipboard
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Some example code that creates a temporary buffer, fills the lines and
+copies data to the clipboard:
+
+#+begin_src emacs-lisp
+  (defun get-string ()
+     (interactive)
+     (set-buffer (get-buffer-create "my-temporary-buf"))
+     (insert "a string that goes into the buffer as test data")
+     (fill-region (point-min) (point-max))
+     (clipboard-kill-region (point-min) (point-max))
+     (kill-buffer))
+#+end_src
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

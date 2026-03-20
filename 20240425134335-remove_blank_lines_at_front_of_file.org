@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       391E0E9F-5CD6-4C06-A89D-461DDE822CE1
+:END:
+#+title: Remove blank lines at front of file
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+A one-liner to remove blank lines at the front of a file:
+
+#+begin_src sh
+# delete the blank lines until we hit one that isn't and 
+# then loop through the rest of the file branching back to
+# :a label.
+sed -e '/^$/d;:a' -e 'n;ba' filename
+#+end_src
+
+The above code's portable across POSIX and GNU sed.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]

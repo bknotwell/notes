@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       ED31F329-92CA-4FAB-AD9F-A7200D51CC1A
+:END:
+#+title: Installing Shiny Server on AARM64
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Since there are no Shiny Server packages for AARM64, you need to build
+it yourself.  You start with these [[https://github.com/rstudio/shiny-server/wiki/Building-Shiny-Server-from-Source][directions]] but you need to make one
+fundamental change.  Instead of running the following command:
+=../external/node/install-node.sh=, you need to install
+node16[fn::current as of <2022-05-22 Sun>] explicitly using the
+following command:  =dnf install @node:16= and then run everything else
+identically with one minor change.  Instead of running 
+=(cd .. && ./bin/npm install)=, you need to do a =(cd .. && npm install)=
+so you use your installed node.
+
+Two other caveats:
++ you will need to setup your ssh private key to be able to connect to
+  github's public repositories.
++ you will probably need to do a =npm update= to get the =npm install=
+  command to succeed.
+
+As part of the =../external/node/install.node.sh= workaround, you'll
+need to replace the =node= and =shiny-server= files in the /ext/bin/
+directory with their AARM64 equivalents.
+
+[[id:e452ea12-c9f6-48a1-b2b0-1bcdc91f9a0a][Upgrading node POSIX fixup]]
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

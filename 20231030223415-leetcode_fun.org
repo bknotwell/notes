@@ -1,0 +1,68 @@
+:PROPERTIES:
+:ID:       46720479-883A-4B57-A62D-02EF8D0115B6
+:END:
+#+title: Leetcode fun
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+* Fun with leetcode
+
+** Reduce a number to zero
+
+Recursive version ran faster but used more memory.
+
+#+begin_src C
+int numberOfSteps(int num){
+    int count = 0;
+    while(num != 0) {
+        count++;
+        num = num & 1 ? (num - 1) : num >> 1;
+    }
+    return count;
+}
+#+end_src
+** Middle of linked list
+#+begin_src C
+**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* middleNode(struct ListNode* head){
+   struct ListNode* p = head;
+   struct ListNode* pp = head;
+   int move = 0;
+   for( ; p != 0; p = p->next, move++) {
+       if(move && (move & 1) == 0)
+           pp = pp->next;
+   }
+   return(move & 1 ? pp : pp->next);
+}
+#+end_src
+
+** Ransom note
+
+#+begin_src C
+  bool canConstruct(char * ransomNote, char * magazine){
+      int magazineCount[26] = {0};
+
+      for(char* p = magazine; *p != '\0'; p++)        
+          magazineCount[*p - 'a']++;
+
+      for(char* p = ransomNote; *p != '\0'; p++)
+          magazineCount[*p - 'a']--;
+
+      for(unsigned int i = 0; i < 26; i++)
+         if(*(magazineCount + i) < 0)
+             return false;
+
+      return true;
+  }
+#+end_src
+
+#+RESULTS:
+
+[[file:sitemap.org][Sitemap]]

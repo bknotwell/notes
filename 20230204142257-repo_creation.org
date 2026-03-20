@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       6B7B3019-5399-4665-B6B5-3DABAA1BD944
+:END:
+#+title: Repo creation
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Do the following to create a fossil repo:
+
+1. =fossil init [-A username] reponame.fossil=
+2. =mkdir reponame; cd reponame=
+3. =fossil open ../reponame.fossil=
+
+*NB:* the =-A username= is crucial if you want to commit with a different
+(e.g. [[https://chiselapp.com/][chiselapp]]) username.
+
+[[id:2F45F4E6-5158-4C7C-BF21-38C305D7A8E0][Fossil tips]]
+
+[[file:sitemap.org][Sitemap]]
+

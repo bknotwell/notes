@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       2215cf8c-4632-487d-9f8d-155413f94fb1
+:END:
+#+title: AT job scheduling
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+The [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/at.html][at]] utility is related to cron (it's run with a 5 minute lag by
+cron on FreeBSD) and allows a user to specify when to run a single
+command.  Specify the command like the following:
+
+#+begin_src sh :exports code
+at -t 202406200500.00<<EOF
+/usr/local/bin/certbot renew
+EOF
+#+end_src
+
+Use the =atq= command to see that the job's been scheduled:
+
+#+begin_example
+Date                            Owner           Queue   Job#
+Tue Aug 20 06:00:00 UTC 2024    root            c       5
+#+end_example
+
+*NB:* certificates can be renewed no earlier than 30 days prior to expiration.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]

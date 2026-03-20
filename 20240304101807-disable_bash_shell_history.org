@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       8BE1DD74-9027-429D-AE41-0D6F28F125AC
+:END:
+#+title: Disable bash shell history
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+It can be done with a single command:  =set +o history=.
+
+[[file:sitemap.org][Sitemap]]

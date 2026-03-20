@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       86B88F7E-73A4-4DF7-9DCF-71A2CA79C3FF
+:END:
+#+title: Org-mode babel tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+An introduction to [[https://orgmode.org/worg/org-contrib/babel/intro.html][Babel]] covers some uncommon topics:
+- source-block evaluation (=org-sbe=) :: a way to call a source block from a table formula.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs Tips]]
+
+[[file:sitemap.org][Sitemap]]
+

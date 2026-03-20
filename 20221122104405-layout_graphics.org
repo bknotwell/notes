@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       2C341950-9859-4574-9B72-0E2E3FA596F8
+:END:
+#+title: Layout graphics
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Setting up graph layout can be down with =par(mfrow=c(n, nprime))= or
+the [[https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/layout][layout]] function:
+
+#+begin_src R :exports both :results output graphics file :file layout.svg
+layout(matrix(c(1,1,1,2,2,2,3,3,4,4,5,5),nrow=2,byrow=TRUE))
+
+hist(rnorm(100, 110, 11))
+hist(rnorm(100, 220, 22))
+hist(rnorm(100, 330, 33))
+hist(rnorm(100, 440, 44))
+hist(rnorm(100, 550, 55))
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]

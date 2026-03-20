@@ -1,0 +1,24 @@
+#+TITLE:  Setup org-protocol
+#+SETUPFILE: latexcss.theme
+#+OPTIONS: author:nil html-postamble:nil
+
+* Setting up the application
+
+Follow what's happening at [[https://web.archive.org/web/20210202022435/https://support.shotgunsoftware.com/hc/en-us/community/posts/209485898-Launching-External-Applications-using-Custom-Protocols-under-OSX][this link.]]  The only confusing part are the
+changes to =Info.plist=.
+
+* Setting up the protocol handlers in chrome
+
+Add bookmarks that look like the following:
+
+#+begin_example
+javascript:location.href='org-protocol://store-link?url=%27+encodeURIComponent(location.href)+%27&title=%27+encodeURIComponent(document.title)
+#+end_example
+
+
+and
+#+begin_example
+javascript:location.href='org-protocol://capture?template=c%27+%27&url=%27+encodeURIComponent(window.location.href)+%27&title=%27+encodeURIComponent(document.title)+%27&body=%27+encodeURIComponent(window.getSelection());
+#+end_example
+
+[[file:sitemap.org][Sitemap]]

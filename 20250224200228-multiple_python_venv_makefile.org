@@ -1,0 +1,64 @@
+:PROPERTIES:
+:ID:       4e515dca-ef3c-4f1e-ad6f-f6b35fca1469
+:END:
+#+title: Multiple Python venv Makefile
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Use a /Makefile/ to build multiple Python virtual environments in
+parallel and generate sourceable files.  Files are in the /requirements/
+directory and naming's important.  Format: /myenvname-PYTHONVERSION.txt/
+.  Example:  /myenvironment-python3.12.txt/ will create a file in the
+/profiles/ directory:  /profiles//myenvironment-python3.12.profile/.
+
+#+begin_example
+PYTHON := python3.9
+VENV ?= myenv
+VENVS=$(shell find requirements -name \*.txt)
+
+define WRAP
+        (. $(VENV)/bin/activate; $1)
+endef
+
+define BUILDVENVRULES
+$1:
+        make setup VENV=$$(subst requirements/,,$$(subst .txt,,$1)) \
+             PYTHON=$$(basename $$(notdir $$(subst -,/,$$(notdir $1))))
+.PHONY: $1
+endef
+
+all: $(VENVS)
+
+setup: install dir-create
+
+dir-create:
+        mkdir -p profiles
+
+install: $(VENV)
+        $(PYTHON) -m venv $(VENV)
+        $(call WRAP,pip install -r requirements/$<.txt)
+        echo "#!/bin/sh" > profiles/$(VENV).profile
+        echo "source $(VENV)/bin/activate" >> profiles/$(VENV).profile
+        echo "export PYTHONPATH=$$(pwd):$$(pwd)/src" >> profiles/$(VENV).profile
+        @echo "\n\nNow run the following to activate the venv:\n\n$$ source profiles/$(VENV).profile"
+
+$(foreach venv,$(VENVS), $(eval $(call BUILDVENVRULES,$(venv))))
+
+# `make -p t > rules-info.txt' allows you to see the generated rules
+t:
+        echo test
+
+clean:
+        rand=$$$$ && \
+        rm -fr local_runtime_dir \
+        mv $(VENV) venv.$$rand && \
+        nohup rm -fr venv.$$rand >/dev/null 2>&1 & # don't wait for completion
+
+.PHONY: $(VENV) setup t allvenvs
+#+end_example
+
+[[id:2070E582-F71A-47A8-838F-85A7D3556C8D][Gmake fun]]
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       1CC62EB6-D58C-40E4-AB94-7DDE90F822D0
+:END:
+#+title: Numeric loan amortization
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Loans can be amortized with the following formula:
+
+$A = P * ((i(1+i)^n) / ((1+i)^n - 1))$
+
+In R:
+
+#+begin_src R
+calcamortization <- function(P, i, n) P * ((i * ((1 + i)^n)) / (((1 + i)^n) - 1))
+#+end_src
+
+Let's do it numerically in R:
+
+#+begin_src R :session A-numeric
+
+numericamortization <- function(P, N, i, A) {
+    NPP <- Reduce(function(NPrime, ignored) (NPrime * (1 + i)) - A, 1:N, P) 
+    
+    if(NPP < 5)
+        A
+    else
+        numericamortization(P, N, i, A + 1)
+}
+#+end_src
+
+#+RESULTS:
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]

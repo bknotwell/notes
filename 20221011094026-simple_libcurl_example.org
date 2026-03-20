@@ -1,0 +1,83 @@
+:PROPERTIES:
+:ID:       18BA7FF1-C87E-4DDA-8C90-9F34B4E7A907
+:END:
+#+title: Simple libcurl example
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+
+Use libcurl to POST data to an endpoint with a certificate/key pair:
+
+#+begin_src C
+  #include <stdio.h>
+  #include <unistd.h>
+  #include <stdlib.h>
+
+  #include <curl/curl.h>
+
+  static CURL* curl = NULL;
+  static void curlcleanup(void) { if(curl)curl_easy_cleanup(curl); }
+
+  static struct curl_slist *list = NULL;
+  static void slistcleanup(void) { if(list)curl_slist_free_all(list); }
+
+  int main(int argc, char* argv[]) {
+      CURLcode res;
+
+      if((res = curl_global_init(CURL_GLOBAL_DEFAULT))) {
+          fprintf(stderr, "Failed initializing libcurl: %s\n",
+                  curl_easy_strerror(res));
+          return(EXIT_FAILURE);
+      }
+      atexit(curl_global_cleanup);
+      atexit(curlcleanup);
+      atexit(slistcleanup);
+
+      if((curl = curl_easy_init()) == 0) {
+          fprintf(stderr, "Failed initializing curl\n");
+          return(EXIT_FAILURE);
+      }
+
+      curl_easy_setopt(curl, CURLOPT_URL, "https://www.bogus.com");
+      if((list = curl_slist_append(list, "Content-Type: application/json")) == NULL) {
+          fprintf(stderr, "Failed setting headers\n");
+          return(EXIT_FAILURE);
+      }
+
+      char payload[] = "{\"a\": 33}";
+      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
+      curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, sizeof(payload));
+      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, payload);
+      curl_easy_setopt(curl, CURLOPT_SSLCERT, argv[1]);
+      curl_easy_setopt(curl, CURLOPT_SSLKEY, argv[2]);
+
+      if((res = curl_easy_perform(curl)) != CURLE_OK) {
+          fprintf(stderr, "Failed POSTing data: %s\n",
+                  curl_easy_strerror(res));
+          return(EXIT_FAILURE);
+      }
+      return(EXIT_SUCCESS);
+  }
+#+end_src
+
+A Makefile to build it would be similar to the following:
+
+#+begin_example
+  FILE=postit
+  CURL=/usr/local/Cellar/curl/7.85.0
+  SSL=/usr/local/Cellar/openssl@3/3.0.5
+  LDFLAGS=-L$(CURL)/lib -lcurl -L$(SSL)/lib -lcrypto -lssl
+  CFLAGS=-I$(CURL)/include -I$(SSL)/include -g -Wall -Werror
+
+  all: $(FILE)
+
+  clean:
+	rm -fr $(FILE)
+#+end_example
+
+[[id:A9CFAE3E-52A0-49FE-8D5F-177F4EE60925][Curl tips]]
+
+[[file:sitemap.org][Sitemap]]
+

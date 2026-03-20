@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       268880E7-BFC9-49BB-BBAF-FCF4EED297CA
+:END:
+#+title: Installing R on Oracle Linux 8
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Oracle Linux doesn't have the Extra Packages for Enterprise Linux
+(epel) installed by default.  Run the following command to install:
+
+=dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm=
+
+After the command succeeds, the output of the =dnf repolist= command
+should look something like the following:
+
+#+begin_example
+repo id                                                      repo name
+epel                                                         Extra Packages for Enterprise Linux 8 - aarch64
+epel-modular                                                 Extra Packages for Enterprise Linux Modular 8 - aarch64
+newrelic-infra                                               New Relic Infrastructure
+ol8_MySQL80                                                  MySQL 8.0 for Oracle Linux 8 (aarch64)
+ol8_MySQL80_connectors_community                             MySQL 8.0 Connectors Community for Oracle Linux 8 (aarch64)
+ol8_MySQL80_tools_community                                  MySQL 8.0 Tools Community for Oracle Linux 8 (aarch64)
+ol8_appstream                                                Oracle Linux 8 Application Stream (aarch64)
+ol8_baseos_latest                                            Oracle Linux 8 BaseOS Latest (aarch64)
+ol8_codeready_builder                                        Oracle Linux 8 CodeReady Builder (aarch64) - Unsupported
+ol8_ksplice                                                  Ksplice for Oracle Linux 8 (aarch64)
+ol8_oci_included                                             Oracle Software for OCI users on Oracle Linux 8 (aarch64)
+#+end_example
+
+With newly added /epel/ and /epel-modular/ repositories.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

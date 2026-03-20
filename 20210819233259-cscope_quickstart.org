@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       B59638D4-B5E6-4CE3-BED2-5DC4122A568F
+:END:
+#+title: Cscope quickstart
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+
+The [[http://cscope.sourceforge.net/][cscope]] utility is helpful for source code indexing and search.
+It's easy to install on OSX as long as you have /brew/ installed.
+
+Directions follow:
+
++ =brew install cscope=
++ find all files to be indexed and store them in a file.  Example:
+  =find . -name \*.[ch] > fname=
++ index the files: =cscope -b -i fname=
++ navigating the code using the Curses-based interface: =cscope -d=
+
+A couple of usability hints:
++ move up and down the form using Ctrl-n or Ctrl-p.
++ after a search completes, matches will be listed in order.  Hitting
+  /enter/ drops you into the source file in /vi/ and quitting the
+  editor puts you back in the search results.
+
+[[file:sitemap.org][Sitemap]]
+

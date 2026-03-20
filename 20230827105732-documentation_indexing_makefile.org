@@ -1,0 +1,88 @@
+:PROPERTIES:
+:ID:       FD600E24-BAE7-4A73-8356-C7B26B80633F
+:END:
+#+title: Tiny documentation indexing framework
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+* Task
+
+Create a hierarchy of /README.md/ ([[https://en.wikipedia.org/wiki/Markdown][Markdown]]) files that act as a
+navigation page for the directory structure.
+
+* Components
+
+Three components are needed:
+- Makefile :: use [[https://gnu.org/software/make][gmake]] to recognize all new /README.m4/ and /*.md/ files
+  and build everything in the correct order.
+- [[https://www.gnu.org/software/m4/][m4]] macro processor :: generates the final /README.md/ files for
+  each directory.
+- small shell script :: build the /LINKS/ argument (see below) needed
+  when invoking /m4./
+
+Since it's arcane, the /Makefile/ design/implementation is explained in
+detail.  The /Makefile/ does five things:
++ allows easy adaptation to your environment.
++ enumerates all the /markdown/ and /m4/ files.
++ declares the rules to build the /README.md/ files as well as the final
+  html files.
++ automatically generates rules for the /README.md/ builds based.
++ cleans the environment
+
+** Adapt to the environment
+
+#+begin_src makefile-bsdmake :tangle Makefile.markdown
+  M4=m4
+  MD=python3 -mmarkdown -x tables -x codehilite
+#+end_src
+
+** Enumerate files
+
+#+begin_src makefile-bsdmake :tangle Makefile.markdown
+MDSRCS=$(shell find docs -name '*.md') $(M4SRCS:.m4=.md)
+M4SRCS=$(shell find docs -name '*.m4')
+#+end_src
+
+** Declare [[https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html][pattern rules]] and [[https://www.gnu.org/software/make/manual/html_node/Functions.html#index-functions][functions]]
+
+There are three important pieces:
+
++ declaring a custom function to be called later.
++ enumerating all /*.md/ files in a directory while excluding the local
+  /README.md/ file.
++ creating /pattern rules/.
+
+#+begin_src makefile-bsdmake :tangle Makefile.markdown
+  define MD_RULE
+  $1: $(foreach file, $(subst $(dir $1)README.md,,$(wildcard $(dir $1)*.md)), $(file))
+  endef
+
+  %.md: %m4
+      $(M4) -P -DLINKS="$(shell sh smallshell.sh $<)" $< > $@
+
+  %.html: %.md
+      $(MD) $< > $@
+#+end_src
+** Rules
+
+The /foreach/ statement creates rules for individual /README.md/ files in
+the lower directories.
+
+#+begin_src makefile-bsdmake :tangle Makefile.markdown
+  all: $(M4SRCS:.m4=.md) README.MD
+
+  $(foreach file, $(M4SRCS:.m4=.md), $(eval $(call MD_RULE, $(file))))
+
+  README.md: $(M4SRCS:.m4=.md)
+
+  html: $(MDSRCS:.md=.html)
+
+  clean:
+      rm -fr $(M4SRCS:.m4=.md) $(MDSRCS:.md=.html) README.md
+#+end_src
+
+You can test your Makefile by looking at Make's internal database.
+See [[id:46AF2FF9-73E8-4CAE-9AE1-44DCF02B9F53][Print Makefile rules]].
+
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       EF7019D9-AA93-43F1-8235-2034401FC5D2
+:END:
+#+title: OpenSSL tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+This is a place to note small OpenSSL examples:
++ [[id:81846B62-F457-456D-A454-69E3B9E8824B][Instance principal certificate]]
++ [[id:26C7BD1A-7A40-42B5-9DCB-06E546007701][Certificate expiration check with libcrypto]]
++ [[id:E0743337-3AFE-4FCD-B06E-DAFF3078E1CE][Certificate information with command-line]]
++ [[id:5659B212-21A7-4BE5-A2B3-B177163DA6F8][Dissecting a JWT]]
++ [[id:d55b2ac2-307e-48b9-83bb-ffeca976b6bb][Symmetric Encryption Example]]
+
+[[id:6FECFB5F-F039-4E71-BAE3-C237A41FC6AB][Unix shell snippets]]
+
+[[file:sitemap.org][Sitemap]]

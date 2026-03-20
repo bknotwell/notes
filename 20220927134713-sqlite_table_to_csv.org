@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       45E9CA53-9286-458A-9BFB-3DE73624F2CD
+:END:
+#+title: SQLite table to CSV
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Convert a SQLite table to a CSV with a command like the following:
+
+#+begin_src sh
+sqlite3 -csv -header dbname
+#+end_src
+
+Interacting with [[https://www.r-project.org/][R]] is more convenient with the =-header= option.
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]
+

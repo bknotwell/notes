@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       405AF30C-9625-40F5-B771-6D4046E13730
+:END:
+#+title: LLVM build on High Sierra
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Trying to update poppler, you're required to rebuild llvm13 which
+breaks by default on High Sierra.  Looking around, you find the
+following [[https://stackoverflow.com/questions/69906053/how-to-install-llvm13-with-homerew-on-macos-high-sierra-10-13-6-got-built-tar/69906054#69906054][post]] which gives you detailed information on how to fix it.
+
+Cutting it down to its essense, you run the following commands:
+
+1. =brew install llvm=
+2. =cd /private/tmp/llvm-20220515-88750-ptkp1c/llvm-project-13.0.1.src/=
+3. =vi lldb/source/Host/macosx/objcxx/HostInfoMacOSX.mm=
+4. Go to line 246 and change /if (cputype == CPU_TYPE_ARM64 &&
+   cpusubtype == CPU_SUBTYPE_ARM64E) {/ to /if (cputype ==
+   CPU_TYPE_ARM64) {/.
+
+The procedure above is not foolproof as you need to make the edit
+prior to the build compiling that file.
+
+
+[[file:sitemap.org][Sitemap]]
+

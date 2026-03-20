@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       FE38150E-B546-4F86-8099-343522906902
+:END:
+#+title: EFS traffic through a ssh tunnel
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+An EFS filesystem can be mounted to a local machine in the following
+way:
+
+1. Create a VM jump box that has [[id:999317F5-4E06-4A80-A6AB-088445E9EA7E][Script to edit sshd_config to
+   /AllowTcpForwarding/]] enabled.
+2. Setup an SSH tunnel: =ssh -fN -L 2049:fs-XXXXXXXXXX.efs.XX-XXXX-X.amazonaws.com:2049 ec2-usr@ec2-XXX-XXX-XXX-XX.XX-XXXX-X.compute.amazonaws.com=
+3. Mount the filesystem: =sudo mount -t nfs -o rw,vers=4,rwsize=1048567,retrans=2 localhost:/ /efs=
+
+*NB:* the jump box can mount the filesystem while still encrypting
+tunneled traffic for multiple users.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

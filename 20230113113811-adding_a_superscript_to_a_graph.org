@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       FDD3B53E-52AE-48B3-B593-28BCE1A22BAA
+:END:
+#+title: Adding a superscript to a graph
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+See two methods below to add text to a graph:
+
++ =expression('R'^2)=
++ =bquote('R'^2 ~ .(rsquared)= where =rsquared= is a variable
+  substitution.
+
+The =~= symbol adds spacing.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]

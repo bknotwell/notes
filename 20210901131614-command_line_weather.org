@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       CE0E68B9-2E42-49E3-A9BC-1F46B08C0479
+:END:
+#+title: Command-line weather
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+To get a weather report from the CLI:
+
+=curl 'https://wttr.in?u'= (the =?u= is important to get Fahrenheit).
+
+Or just click [[http://wttr.in?u][here.]]
+
+Main repo [[https://github.com/chubin/wttr.in][here.]]
+
+[[file:sitemap.org][Sitemap]]
+

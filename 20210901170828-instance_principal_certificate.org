@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       81846B62-F457-456D-A454-69E3B9E8824B
+:END:
+#+title: Instance principal certificate
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+To access the certificates on the OCI instances:
+
+=curl -H "Authorization: Bearer Oracle" http://169.254.169.254/opc/v2/identity/cert.pem | openssl x509 -in /dev/stdin -text -noout=
+
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+
+[[file:sitemap.org][Sitemap]]
+

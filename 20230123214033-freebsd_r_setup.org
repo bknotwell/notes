@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       C0B81131-B285-464C-894D-36851B9CC9FE
+:END:
+#+title: FreeBSD R setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Setting up R on FreeBSD requires a single command: =pkg install R=
+
+*NB:* R is in the =math/R= area of the ports tree not =lang=.
+
+Depending on when you install, you may need to do some combination of
+=pkg update= and =pkg upgrade= to get a newer /icu/ version that avoids the
+following error:
+
+=ld-elf.so.1: Shared object "libicuuc.so.72" not found, required by "libR.so.4"=
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

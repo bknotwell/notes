@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       D74D157E-6A51-4058-A25C-7936103B542F
+:END:
+#+title: Download file from Kaggle w/o a browser
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Using the webUI, setup an API key and store it in
+=~/.kaggle/kaggle.json= (*NB:* this specific location is only necessary if
+you want to use their CLI).
+
+To install their CLI: =pip3 install kaggle= and you can use it.  If
+you'd prefer to make calls directly, you'll do a command like the
+following:
+
+#+begin_src sh :tangle kaggle-download.sh :var filename=".kaggle/kaggle.json" :var user="piterfm" :var dataset="2022-ukraine-russian-war"
+  auth=$(jq -rj '.username, ":", .key' $HOME/$filename | openssl enc -base64)
+  ENDPOINT=https://www.kaggle.com/api/v1/datasets/download
+  redir=$(curl -H "Authorization: Basic $auth" $ENDPOINT/$user/$dataset --write-out "%{redirect_url}")
+  curl $redir > $$.zip
+  unzip $$.zip
+  rm $$.zip
+#+end_src
+
+*Links:*
+
++ [[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
++ [[id:B2E35F95-8A5C-49AC-8F48-EDDFE9C820CE][Estimating from a linear model]]
+
+[[file:sitemap.org][Sitemap]]
+

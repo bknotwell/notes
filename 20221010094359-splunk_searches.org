@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       2BE7CF9B-7AA0-447B-ADE5-021A74E9AA90
+:END:
+#+title: Splunk searches
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+* Rationale
+
+A 4-5 line Splunk [[https://docs.splunk.com/Documentation/Splunk/9.0.1/SearchReference/Search][search]] can be difficult to write.
+
+* Messages/hour to an index
+
+** Slow way
+#+begin_example
+index=myindex source=mysource
+| bucket _time span=hour
+| stats count by _time
+#+end_example
+
+** Fast way
+
+Hourly stats for the last month.  The =@h= syntax sets the query at hour
+boundaries and avoids partial results for the first and last hour.
+
+#+begin_example
+| tstats count where (index=myindex earliest=-720h@h latest=@h) by _time span=1)
+#+end_example
+
+Use of the [[https://docs.splunk.com/Documentation/Splunk/9.0.1/SearchReference/Tstats][tstats]] function is significantly faster than the [[https://docs.splunk.com/Documentation/Splunk/9.0.1/SearchReference/Stats][stats]]
+function.
+* Comparing messages/hour
+
+You may want to alert if message ingestion drops significantly (30% in
+this example):
+#+begin_example
+| tstats count where (index=myindex earliest=-1h@h latest=@h) by _time span=1h
+| appendcols [| tstats count as count2 where (index=myindex earliest=-2h@h latest=-1h@h) by _time span=1h]
+| eval percent=count / count2
+| table percent
+| where percent < 0.7
+#+end_example
+
+Documentation for the [[https://docs.splunk.com/Documentation/Splunk/9.0.1/SearchReference/Appendcols][appendcols]] and [[https://docs.splunk.com/Documentation/Splunk/9.0.1/SearchReference/Table][table]] functions.
+
+[[file:sitemap.org][Sitemap]]

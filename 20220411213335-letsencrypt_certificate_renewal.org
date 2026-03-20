@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       AADE04CA-C4AB-4CD3-9F6D-4CFAF995EEBD
+:END:
+#+title: Letsencrypt certificate renewal
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+To [[https://docs.digitalocean.com/support/how-can-i-renew-lets-encrypt-certificates/][renew]] the certificate, login, =su= to root and run the following
+command: =certbot renew=.
+
+You don't need to restart [[id:A39C905E-39AF-49F1-A5E6-295422A2FF37][nginx.]]
+[[file:sitemap.org][Sitemap]]
+

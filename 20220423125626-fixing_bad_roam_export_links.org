@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       DBF8C200-64F9-4CDE-8AD9-2360666D5AE2
+:END:
+#+title: Fixing bad roam export links
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+If =org-publish= fails with an /Unable to resolve link/ failure, try
+[[https://dev.to/devteam/resolving-an-unable-to-resolve-link-error-for-org-mode-in-emacs-2n1f][fixing]] the issue by doing the following:
+
+#+begin_src emacs-lisp
+  (progn (org-id-update-id-locations)
+  ;; Note: you may need `org-roam-db-clear-all'
+  ;; followed by `org-roam-db-sync'
+         (org-roam-db-sync)
+         (org-roam-update-org-id-locations))
+#+end_src
+
+After executing the above functions, publishing should work again.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       da1d1468-4a7b-40b5-844b-1c4240917dab
+:END:
+#+title: Symmetric decryption in Python
+#+OPTIONS: ^:nil author:nil html-postamble:nil toc:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+A decryption example using Python's [[https://pypi.org/project/cryptography/][cryptography]] package.
+
+#+begin_src python
+import base64
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+
+# values are a hex string
+salt=bytes.fromhex(...)
+key=bytes.fromhex(...)
+iv=bytes.fromhex(...)
+
+cipher = Cipher(algorithms.AES256(key), modes.CBC(iv))
+dec = Cipher.decryptor()
+
+# the data will be padded to a 32-byte blocksize so account for that
+data = dec.update(...data2decrypt...) + dec.finalize()
+#+end_src
+
+[[id:d55b2ac2-307e-48b9-83bb-ffeca976b6bb][Symmetric Encryption Example]]
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       07c0e5ba-0e0a-4bbb-aafa-d8107d16aaef
+:END:
+#+title: Pandoc notes
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+A container for [[https://pandoc.org][Pandoc-related]] items.
+
++ [[id:71706ecc-980e-468d-8eca-121e08dee6ae][Pandoc lua table filter]]
++ [[id:88478c6d-acad-49d7-9ea0-1fe969fb6b4e][Pandoc lua CSV writer]]
++ [[id:b263b428-5284-4f76-8c64-81d9fab808bc][Extract links from html with Lua and pandoc]]
+
+[[file:sitemap.org][Sitemap]]
+

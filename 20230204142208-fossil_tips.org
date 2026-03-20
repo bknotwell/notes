@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       2F45F4E6-5158-4C7C-BF21-38C305D7A8E0
+:END:
+#+title: Fossil tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+A place for [[https://fossil-scm.org][Fossil]] tips:
+
+- [[id:6B7B3019-5399-4665-B6B5-3DABAA1BD944][Repo creation]]
+- [[id:F426F3BC-53DD-4CC7-BB63-DE5682352323][Chiselapp repo setup]]
+- [[id:9E661D35-6C15-4B0E-B059-353F07322F1C][Testing markdown documentation]]
+
+[[file:sitemap.org][Sitemap]]
+

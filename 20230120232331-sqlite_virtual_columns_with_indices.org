@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       5B913FD2-F70F-485A-9C76-CD4CC669D8B5
+:END:
+#+title: SQLite virtual columns with indices
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+SQLite supports [[https://www.sqlite.org/gencol.html][generated columns]] which can be combined with indexes
+to significantly increase JSON query performance.
+
+Methodology:
+1. Create the table with the generated column using the =json_extract=
+   function.
+2. Create an index on the generated column's name.
+
+*NB:* this method only works when the generated column is added at
+creation time.
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]
+

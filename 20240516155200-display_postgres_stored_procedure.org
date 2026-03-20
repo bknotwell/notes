@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       1E1518E2-6139-4736-B214-4BA207E48302
+:END:
+#+title: Display Postgres Stored Procedure
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+You can display the [[https://tableplus.com/blog/2018/08/postgresql-how-to-show-stored-procedure.html][code]] from a running stored procedure in the
+following way:
+
+#+begin_src sh
+SELECT prosrc FROM pg_proc WHERES proname = 'function_name';
+#+end_src
+
+[[file:sitemap.org][Sitemap]]

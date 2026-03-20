@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       E0F19F14-46F6-4116-937E-5F0078E7DC1A
+:END:
+#+title: Keyboard Macros
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Main [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Keyboard-Macro.html][documentation]].  Excellent [[https://www.masteringemacs.org/article/keyboard-macros-are-misunderstood][article.]]
+
+Start recording a macro:  {C-x (}  or {F3}
+
+Stop recording a macro:   {C-x )}  or {F4}
+
+Execution a macro:        {C-x e}
+
+Name a macro:             {C-x C-k n}
+
+Bind a macro:             {C-x C-k b}
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

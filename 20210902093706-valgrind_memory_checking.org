@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       265A1D23-B57A-4E38-9B2E-6FD9985635DD
+:END:
+#+title: Valgrind memory checking
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+[[https://valgrind.org][Valgrind]] can be used to check for memory leaks but it can also tell
+you when you're accessing memory that's not yours:
+
+=valgrind --tool=memcheck executable=
+
+[[file:sitemap.org][Sitemap]]
+

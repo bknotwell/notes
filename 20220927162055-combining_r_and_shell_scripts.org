@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       6098DEAE-6DAD-402D-8124-9EC853BC74D9
+:END:
+#+title: Combining R and shell scripts
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+If you have a shell script creating data that's fed to [[https://www.r-project.org/][R]], you might
+want to combine the two:
+
+#+begin_src sh :exports code
+# might be simpler than loading SQLite support in R
+sqlite3 -csv -header $1 'SELECT * from logs' > $$.csv
+
+cat > $$.R <<EOF
+
+data <- read.csv('$$.csv')
+cat("Message length summary")
+summary(data\$msglen)
+
+cat("Message length distribution")
+stem(data\$msglen)
+EOF
+
+rm $$.csv
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[id:6FECFB5F-F039-4E71-BAE3-C237A41FC6AB][Unix shell snippets]]
+
+[[file:sitemap.org][Sitemap]]
+

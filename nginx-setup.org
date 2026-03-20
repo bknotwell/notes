@@ -1,0 +1,66 @@
+:PROPERTIES:
+:ID:       A39C905E-39AF-49F1-A5E6-295422A2FF37
+:END:
+#+TITLE:  Setting up nginx
+#+SETUPFILE: latexcss.theme
+#+OPTIONS:  author:nil ^:nil  html-postamble:nil
+
+All as root:
+
+1. =yum install nginx=
+2. =nginx=
+3. =firewall-cmd --zone=public --permanent --add-port=80/tcp=
+4. =firewall-cmd --reload=
+5. Installed certbot using instractions from here: https://certbot.eff.org/lets-encrypt/otherpip-nginx
+6. =firewall-cmd --zone=public --permanent --add-port=443/tcp=
+7. =firewall-cmd --reload=
+8. =certbot --nginx= to get your certificates.  *NOTE:* ensure you put in the DNS name of every name you want covered by the certificate.
+9. Update =/etc/nginx/nginx.conf= with the content directory.  Use =nginx -s quit= to stop the process and =nginx= to start it.
+10.  =mkdir /var/www= and =chown -R nginx /var/www=
+11. Setup to start after reboot: =systemctl enable nginx=
+
+Potential issues:
++ DNS not setup correctly
++ SElinux wastes your time
+
+If you have an [[https://www.nginx.com/blog/using-nginx-plus-with-selinux/][nginx selinux issue]] (mine showed up after enabling systemd to start nginx on boot), you might need to do something like the following:
+
+1. tail /var/log/audit/audit.log, look for an nginx error and capture the error identifier (see below for an example).
+2. =grep 1627624977.300:441 /var/log/audit/audit.log | audit2why= and follow the instructions.
+3. running =setsebool -P httpd_enable_homedirs 1= fixed the permissions issue.
+
+Setting up [[https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy][nginx to proxy to Shiny]] (localhost:3838):
+#+begin_example
+http {
+
+  map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+  }
+
+  server {
+    listen 80;
+
+    rewrite ^/shiny$ $scheme://$http_host/shiny/ permanent;
+    
+    location /shiny/ {
+      rewrite ^/shiny/(.*)$ /$1 break;
+      proxy_pass http://localhost:3838;
+      proxy_redirect / $scheme://$http_host/shiny/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_read_timeout 20d;
+      proxy_buffering off;
+    }
+  }
+}
+#+end_example
+
+Fixing the selinux issue with proxying might require the following command:
+
+=setsebool -P httpd_can_network_connect on=
+
+[[id:DF99CCE7-6B5C-4319-9613-58925183835E][Website setup]]
+
+[[file:sitemap.org][Sitemap]]

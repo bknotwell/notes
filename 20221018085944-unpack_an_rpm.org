@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       A479716D-85C0-4960-9983-218DFDE7BF38
+:END:
+#+title: Unpack an RPM
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+RPMs are just [[https://pubs.opengroup.org/onlinepubs/7908799/xcu/cpio.html][cpio]] files with some additional information.  Ripping
+them apart is simple with the[[https://man7.org/linux/man-pages/man8/rpm2cpio.8.html][ rpm2cpio]] utility:
+
+#+begin_src sh
+rpm2cpio rpmfile | cpio -id
+#+end_src
+
+[[id:6FECFB5F-F039-4E71-BAE3-C237A41FC6AB][Unix shell snippets]]
+
+[[file:sitemap.org][Sitemap]]
+

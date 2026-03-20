@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       75C9F762-2B3D-458D-9143-00504670B1D4
+:END:
+#+title: File iteration and insertion
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+The function =zzz= iterates over a list of four-element items and opens
+up the file, searches for a match, inserts the generated text and
+saves the file.  The files are left open for further editing.
+
+#+begin_src emacs-lisp
+  (defun zzz (elt)
+    (let ((file (car elt))
+          (repo (cadr elt))
+          (stanza (format (concat "   cst: %d\n"
+                                  "   cis: %s\n")
+                          (caddr elt) (cadddr elt))))
+      (progn
+        (find-file file)
+        (goto-char (point-min))
+        (if (not (equal (search-forward (concat repo "\n") nil t) nil))
+            (progn (insert stanza) (save-buffer))))))
+
+  (mapcar #'zzz incoming-list)
+#+end_src
+
+[[id:DEE85B81-6107-4203-88C0-AFB4BC2F5876][Emacs lisp examples]]
+
+[[file:sitemap.org][Sitemap]]
+

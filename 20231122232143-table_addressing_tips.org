@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       904CB9C3-7A3F-4FA8-9D5A-65967259B8CA
+:END:
+#+title: Table addressing tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Editing tables can be made easier with the following tips:
+
++ { Ctrl-} } (dis | en)ables row and column addressing.
++ { Ctrl-{ } (dis | en)ables formula debugging.
++ { Ctrl-c = } input the formula for a column.
++ { Ctrl-c ' } edit table formulas in a separate buffer with
+  highlighting.
+
+Use the menubar if you cannot remember the keybindings.
+
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

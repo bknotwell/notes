@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       2CE5E89B-EF5F-48BC-9D84-9109C388EACA
+:END:
+#+title: GGplot examples
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+* Background
+[[https://ggplot2.tidyverse.org/][Ggplot2]] is an extension to R's base graphics capability.  Here are
+some examples:
+
+* Examples
+** Scatterplot with dates and scales
+
+#+begin_src R
+  library(ggplot2)
+  library(scales)
+
+  data <- read.csv('t.csv')
+  data$X_time <- as.POSIXct(data$X_time, format='%Y-%m-%dT%H:%M:%S.000+0000')
+
+  options(scipen=999)  # disable scientific notation
+
+  ggplot(data, aes(x=X_time, y=count * 100000)) + geom_point() +
+      ggtitle('System messages/hour'),\ + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_y_continuous(labels=comma) + ylab('Count') + xlab('Date')                                        
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+[[file:sitemap.org][Sitemap]]
+

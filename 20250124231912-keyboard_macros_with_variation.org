@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       650040a5-e777-4334-9c40-ab117c8d303e
+:END:
+#+title: Keyboard macros with variation
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+* Defining a variant macro
+Creating emacs macros with [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Keyboard-Macro-Query.html][variation]]:
+
+1. Start creating your macro.
+2. {C-x q} when you need to do a custom input.
+3. Stop creating the macro.
+
+* Executing a variant macro
+
+1. Start executing your macro.
+2. {C-r} when the macro prompts you for a recursive edit.
+3. Do your custom edits and run {C-M-c} to return control back to the
+   original macro.
+
+These can be profitably combined with snippets to create complex text
+generation workflows.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+[[file:sitemap.org][Sitemap]]

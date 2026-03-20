@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       37a34012-1258-4fcb-9131-252c5d8c4777
+:END:
+#+title: Estimate \pi with sqlite
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Simulate \pi with a Monte Carlo method:
+
+#+begin_src sh :exports both :results output
+sqlite3 <<EOF
+CREATE TABLE testit (
+   id INTEGER PRIMARY KEY NOT NULL, 
+   X REAL NOT NULL, 
+   Y REAL NOT NULL
+);
+
+-- https://stackoverflow.com/questions/23785143/need-help-adding-random-float-in-sqlite
+INSERT INTO testit
+  WITH RECURSIVE
+     cnt(id, x, y) AS (
+     VALUES(1,  RANDOM() / CAST(-9223372036854775808 AS REAL) ,
+                       RANDOM() / CAST(-9223372036854775808 AS REAL) ) UNION ALL
+     SELECT id+1,  RANDOM() / CAST(-9223372036854775808 AS REAL) ,
+                            RANDOM() / CAST(-9223372036854775808 AS REAL) FROM cnt
+                    WHERE id < 1000000)
+    SELECT * FROM cnt;
+
+SELECT cast((SELECT count(*) FROM testit WHERE sqrt((x*x) + (y*y)) < 1) AS REAL) /
+                       (SELECT count(*) FROM testit) * 4;
+EOF
+#+end_src
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+[[file:sitemap.org][Sitemap]]

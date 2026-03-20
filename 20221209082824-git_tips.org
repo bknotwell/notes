@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       624BDDDE-3431-4F9F-85C0-D063307C0C37
+:END:
+#+title: Git tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+* Pushing to a remote branch
+
+*Situation:*  you've local changes that you've committed to your master
+branch.
+
+*Task:*  you want to push the commits to a remote branch with a
+different name so you can create a PR.
+
+*Action:*
+1.  Commit your changes.
+2.  Create a branch (e.g. =git branch my-feature=) and switch to it
+   (=git checkout my-feature=).
+3.  Push the changes as a new branch to the remote:  =git push -u
+   origin my-feature=.
+
+*Result:*  you'll have a remote branch that's setup for a PR.
+
+
+
+[[file:sitemap.org][Sitemap]]
+

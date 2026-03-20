@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       9898ABB4-41F3-4E2B-A823-80FCD6A34596
+:END:
+#+title: Starting Shiny Server at boot
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+To get the server to start automatically:
+
+1.  =cp ~/shiny-server/config/systemd/shiny-server.service
+   /etc/systemd//system=
+2. =vi /etc/systemd/system/shiny-server.service= and change =ExecStart= to
+   reference the correct path (//usr/local/shiny-server/bin/ and
+   //var/log/shiny-server/.
+3. Run =systemctl daemon-reload= so systemd recognizes the new file and
+   =systemctl start shiny-server= to test startup.
+4. Visit the /welcome.html/ page to ensure it is working.
+
+Finally, reboot to ensure it works correctly.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

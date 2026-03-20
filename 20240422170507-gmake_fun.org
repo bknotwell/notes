@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       2070E582-F71A-47A8-838F-85A7D3556C8D
+:END:
+#+title: Gmake fun
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Some interesting /gmake/ snippets.
+
+Find the /README.m4/ and /_sidebar.m4/ files and remove the ones in the
+current directory:
+#+begin_example
+M4SRCS=$(filter=out ./README.m4 ./_sidebar.m4, $(shell find . -name 'README.m4' -o '_sidebar.m4'))
+#+end_example
+
+Swap file suffixes (/m4/ to /md)/:
+#+begin_example
+$(M4SRCS:.m4=.md)
+#+end_example
+
+[[id:3fb1d0e2-46ec-43f5-83da-e5f18747cf00][Easy gmake debugging]]
+[[id:46AF2FF9-73E8-4CAE-9AE1-44DCF02B9F53][Print Makefile rules]]
+[[id:CB35929A-53B2-47D3-8AF6-B76F39FAEBCB][Notes publishing Makefile]]
+[[file:sitemap.org][Sitemap]]

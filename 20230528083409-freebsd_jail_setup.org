@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       89C4E66E-BE8D-4451-9DC8-FCE2E8EF57CD
+:END:
+#+title: FreeBSD jail setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Using [[https://bastillebsd.org/getting-started/][Bastille]] to manage jails
+
+1. Install bastille :: =pkg install bastille=
+2. Enable bastille to start at boot :: =sysrc bastille_enable=YES=
+3. Setup the network interface for the container:
+   1. /sysrc cloned_interfaces+=lo1/
+   2. /sysrc ifconfig_lo1_name="bastille0"/
+   3. /service netif cloneup/
+4. Setup the pf ruleset (see example below; //etc/pf.conf/) 
+5. Configure and start the packet filter: =sysrc pf_enable=yes= and =service pf start=
+6. Bootstrap the base version: =bastille bootstrap 13.2-RELEASE update=
+7. Create the container: =bastille create www 13.2-RELEASE 192.168.1.1=
+8. Install curl to setup packaging:  =bastille pkg www install curl=
+
+
+Packet filter setup:
+#+begin_example
+ext_if="vtnet0"
+
+set block-policy return
+scrub in on $ext_if all fragment reassemble
+set skip on lo
+
+table <jails> persist
+nat on $ext_if from <jails> to any -> ($ext_if:0)
+rdr-anchor "rdr/*"
+
+block in all
+pass out quick keep state
+antispoof for $ext_if inet
+pass in inet proto tcp from any to any port ssh flags S/SA keep state
+pass in inet proto tcp from any to any port https flags S/SA keep state
+#+end_example
+
+
+Random notes:
+
+- ignore the /ZFS is enabled in rc.conf but not bastille.conf./ message.
+- 
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

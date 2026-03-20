@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       1672C346-6610-4F9F-8049-B4DE06EC2CAE
+:END:
+#+title: Calling Emacs lisp as a script
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Use the =--batch= and =-q= options to execute a script from the CLI:
+
+=emacs -q --batch filename.el=
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

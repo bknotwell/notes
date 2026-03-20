@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       AC41605D-A1F2-43AB-B4E9-1C395EB9B345
+:END:
+#+title: Unix tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+General Unix tips:
+
++ [[id:4B2FA699-BDFA-4435-B3F6-47FF25282C98][Enabling the at command on OSX]]
++ [[id:C0B81131-B285-464C-894D-36851B9CC9FE][FreeBSD R setup]]
++ [[id:6CC35590-F3AC-40CF-93F9-7F68EB627A23][Generating static library with ar]]
++ [[id:1ED86EF8-866C-48EA-97CC-2C6A04B5D056][Shell script error handling]]
++ [[id:F897FFDB-B4DF-4BC9-AA08-E71A20A278AF][POSIX-compliant mutex in a script]]
++ [[id:89C4E66E-BE8D-4451-9DC8-FCE2E8EF57CD][FreeBSD jail setup]]
++ [[id:FD600E24-BAE7-4A73-8356-C7B26B80633F][Documentation indexing Makefile]]
++ [[id:46AF2FF9-73E8-4CAE-9AE1-44DCF02B9F53][Print Makefile rules]]
++ [[id:DA330991-1926-4E41-97DC-8AEEC7D243A3][FreeBSD upgrade]]
++ [[id:CB35929A-53B2-47D3-8AF6-B76F39FAEBCB][Notes publishing Makefile]]
++ [[id:3BBD8789-4A84-418D-885E-ECC4C31E2DF3][Simple docker build routine]]
++ [[id:8BE1DD74-9027-429D-AE41-0D6F28F125AC][Disable bash shell history]]
++ [[id:999317F5-4E06-4A80-A6AB-088445E9EA7E][Script to edit sshd_config to AllowTcpForwarding]]
++ [[id:FE38150E-B546-4F86-8099-343522906902][EFS traffic through a ssh tunnel]]
++ [[id:517F5921-1DB3-419B-A48B-7F298CDC431F][File lock exerciser]]
++ [[id:DA72524E-6FCA-4EE8-822E-7B130A1B0AB1][Code in a markdown list]]
++ [[id:111F7AAE-91E3-4DAC-A42B-EFB72F903258][Password prompt in a shell]]
++ [[id:391E0E9F-5CD6-4C06-A89D-461DDE822CE1][Remove blank lines at front of file]]
++ [[id:cce5217b-8cfc-4744-ada7-b54b2cc97b5b][M4 notes]]
++ [[id:2215cf8c-4632-487d-9f8d-155413f94fb1][AT job scheduling]]
++ [[id:462f61c1-7d3f-4321-9474-56ac0bc8edf9][FreeBSD package upgrade]]
++ [[id:67cf88ac-a64b-4ab3-8f38-23ad6235b91a][ed tips]]
++ [[id:b440d7cc-3d62-4872-b77e-c736d05c01e5][Converting newlines to an escaped newline character]]
++ [[id:4e515dca-ef3c-4f1e-ad6f-f6b35fca1469][Multiple Python venv Makefile]]
+
+[[Id:6FECFB5F-F039-4E71-BAE3-C237A41FC6AB][Unix shell snippets]]
+[[file:sitemap.org][Sitemap]]

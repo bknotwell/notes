@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       88478c6d-acad-49d7-9ea0-1fe969fb6b4e
+:END:
+#+title: Pandoc lua CSV writer
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+The code below creates a custom writer that allows data from the
+[[id:71706ecc-980e-468d-8eca-121e08dee6ae][Pandoc lua table filter]] to be written as a CSV.
+
+#+begin_src lua
+res = 'Filename,Rownum\n'
+rownum = 1
+cb = {
+    Str = function(el)
+        res = res .. pandoc.utils.stringify(el) .. ',' .. rownum .. '\n'
+        rownum = rownum + 1
+    end
+}
+
+function Writer(doc, opts)
+    doc.blocks:walk(cb)
+    return res
+end
+#+end_src
+
+[[id:07c0e5ba-0e0a-4bbb-aafa-d8107d16aaef][Pandoc notes]]
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       999317F5-4E06-4A80-A6AB-088445E9EA7E
+:END:
+#+title: Script to edit sshd_config to /AllowTcpForwarding/
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Use the [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ed.html][ed]] line-editor to open the file, find the appropriate line,
+modify it, write the file and exit.
+
+#+begin_src sh
+ed -s /etc/ssh/sshd_config<<EOF
+/^#AllowTcpForwarding/
+s/^#AllowTcpForwarding/AllowTcpForwarding
+wq
+EOF
+#+end_src
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

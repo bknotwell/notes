@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       462f61c1-7d3f-4321-9474-56ac0bc8edf9
+:END:
+#+title: FreeBSD package upgrade
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Upgrade the FreeBSD packages with the following command:
+
+=pkg upgrade=
+
+Followed by a =reboot= and the following steps:
+
+1. login with /ssh/
+2. ensure /nginx/ is responding by checking the /roam/ notes
+3. ensure /shiny/ works
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

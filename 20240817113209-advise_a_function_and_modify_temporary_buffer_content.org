@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       cf0be030-b8ab-4711-8de9-08988b2c6384
+:END:
+#+title: Advise a function and modify temporary buffer content
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Emacs can transparently augment [[https://scripter.co/emacs-lisp-advice-combinators/][functions]] using [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html][advice]].   Example:
+
+#+begin_src emacs-lisp
+  ;;; (advice-remove 'calc-grab-rectangle #'my-around) undoes it
+  (advice-add 'calc-grab-rectangle :around #'my-around)
+
+  (defun my-around (fn &rest args)
+    (let ((buf (current-buffer))
+          (beg (car args))
+          (end (cadr args)))
+      (with-temp-buffer
+        (switch-to-buffer (current-buffer))
+        (insert-buffer buf)  ;; copy original buffer content to the temp buffer
+        (let ((replacements (replace-string-in-region "$" "" beg end)))
+          (apply fn (list beg (- end (if (numberp replacements) replacements 0)) (nth 3 args)))))))
+#+end_src
+
+[[id:DEE85B81-6107-4203-88C0-AFB4BC2F5876][Emacs lisp examples]]
+[[file:sitemap.org][Sitemap]]

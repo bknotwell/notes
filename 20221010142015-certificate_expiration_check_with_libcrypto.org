@@ -1,0 +1,98 @@
+:PROPERTIES:
+:ID:       26C7BD1A-7A40-42B5-9DCB-06E546007701
+:END:
+#+title: Certificate expiration check with libcrypto
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+The C code with use [[https://openssl.org][OpenSSL]]'s =libcrypto= to get access to the internal
+certificate content:
+
+#+begin_src C
+  #include <stdio.h>
+  #include <unistd.h>
+
+  #include <openssl/pem.h>
+  #include <openssl/x509.h>
+  #include <openssl/asn1.h>
+
+  int main(int argc, char* argv[]) {
+      const char* certificate = NULL;
+      FILE* fp = NULL;
+      X509* cert = NULL;
+      ASN1_TIME* = after;
+      int pday, psec;
+
+      if(argc < 2) {
+          fprintf(stderr, "%s certificate\n", *argv);
+          return(EXIT_FAILURE);
+      }
+
+      if((fp = fopen(argv[1], "r")) == NULL) {
+          fprintf(stderr, "Couldn't open cert(%s)\n", argv[1]);
+          return(EXIT_FAILURE);
+      }
+
+      if((cert = PEM_read_X509(fp, NULL, NULL, NULL)) == NULL) {
+          fprintf(stderr, "Couldn't read cert(%s)\n", argv[1]);
+          (void)fclose(fp);
+          return(EXIT_FAILURE);
+      }
+
+      (void)fclose(fp);
+      after = X509_get_notAfter(cert);
+
+      if(X509_cmp_current_time(X509_get_notBefore(cert)) != -1 &&
+         X509_cmp_current_time(after) != 1) {
+          fprintf(stderr, "Certificate is outside before/after time\n");
+          X509_free(cert);
+          return(EXIT_FAILURE);
+      }
+
+      ASN1_TIME_diff(&pday, &psec, after, NULL);
+
+      {
+          char hostname[256];
+          X509_NAME* subject = X509_get_subject_name(cert);
+          X509_NAME_ENTRY *e;
+          ASN1_STRING* d;
+          char longname[256];
+          gethostname(hostname, sizeof(hostname));
+          hostname[sizeof(hostname) - 1] = '\0';
+
+          for(int i = 0; i < X509_NAME_entry_count(subject); i++) {
+              e = X509_NAME_get_entry(subject, i);
+              d = X509_NAME_ENTRY_get_data(e);
+              i2t_ASN1_OBJECT(longname, sizeof(longname),
+                              X509_NAME_ENTRY_get_object(e));
+              if(strcmp(longname, "organizationalUnitName") == 0) {
+                  printf("OU(%s)'s certificate expires in %d days\n",
+                         d->data, -pday);
+                  break;
+              }
+          }
+      }
+      X509_free(cert);
+      return(EXIT_SUCCESS);
+  }
+#+end_src
+
+A Makefile will look similar to the following:
+#+begin_example
+FILE=cert-check
+SSL=/usr/local/Cellar/openssl@3/3.0.5
+LDFLAGS=-L$(SSL)/lib -lcrypto
+CFLAGS=-I$(SSL)/include -g
+
+all: $(FILE)
+
+clean:
+	rm -fr $(FILE)
+#+end_example
+
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+
+[[file:sitemap.org][Sitemap]]
+

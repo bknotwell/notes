@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       AC13BDC9-26D7-44F9-B1C0-DD7418EB0A1E
+:END:
+#+title: Switch orgmode table to table-mode
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Orgmode tables have a rudimentary formatting and won't do multi-line
+tables.  If you switch to /table-mode/, you have more editing options
+available:
+
+1. {Ctrl-c ~} from a point in the table to switch the mode.
+2. {Ctrl-c '} from a point in the table to enter table-mode.
+
+Rendering table-mode tables isn't as well-supported so exports may
+require additional editing.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]

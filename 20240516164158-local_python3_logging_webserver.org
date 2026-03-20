@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       1AA49500-84DC-4FD9-91FC-1C002044CBDD
+:END:
+#+title: Local python3 logging webserver
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+The code below implements a simple HTTP server that listens on
+=localhost:8000= and logs incoming POST data to stdout:
+
+#+begin_src python
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+PORT=8000
+
+class S(BaseHTTPRequestHandler):
+   def _set_response(self):
+       self.send_response(200)
+       self.send_header('Content-type', 'text/plain')
+       self.end_headers()
+
+   def do_POST(self):
+       content_length = int(self.headers['Content-Length'])
+       post_data = self.rfile.read(content_length)
+       print(post_data.decode('utf-8'))
+
+       self._set_response()
+       self.wfile.write(b'ok') 
+
+def run(server_class=HTTPServer, handler_class=S, port=8000):
+    httpd = server_class(('127.0.0.1', port), handler_class)
+    try:
+        httpd.serve_forever()
+    except:
+        pass
+    httpd.server_close()
+
+run()
+#+end_src
+
+Additional information:
+- Dependencies :: [[https://www.python.org][ Python3]]
+- How to run ::  =python3 progname.py=
+- An example message :: =curl -X POST http://127.0.0.1:8000 -d 'simple message to log'=
+
+The server's standard output:
+#+begin_example
+simple message to log
+127.0.0.1 - - [16/May/2024 16:47:22] "POST / HTTP/1.1" 200 -
+#+end_example
+
+[[file:sitemap.org][Sitemap]]

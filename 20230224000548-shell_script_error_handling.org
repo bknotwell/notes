@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       1ED86EF8-866C-48EA-97CC-2C6A04B5D056
+:END:
+#+title: Shell script error handling
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+If you want a shell script to exit on the first error:
+
+=set -e= (this is POSIX-compliant)
+
+You can also do it explicitly by repeatedly checking the status of
+=$?=.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]
+

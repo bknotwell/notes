@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       82b5fb12-f476-464a-a6e1-0303a8cc5b60
+:END:
+#+title: Monte Carlo Simulation of \pi
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Inefficient simulation pi in a line of code:
+
+#+begin_src  R :exports code
+getpi <- function(n) {
+    sum(sqrt((runif(n, -1, 1)^2) + (runif(n, -1, 1)^2)) < 1)/n * 4
+}
+#+end_src
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+[[file:sitemap.org][Sitemap]]
+

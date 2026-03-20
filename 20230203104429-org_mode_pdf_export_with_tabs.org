@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       07D73B66-79AF-4B9F-8E6E-2AB9F9FD88B7
+:END:
+#+title: Org-mode PDF export with tabs
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Exporting source blocks with tabs\mdash{}Makefiles\mdash{}works poorly
+with the default configuration.  This can be fixed with a [[https://orgmode.org/manual/Advanced-Export-Configuration.html][filter]] that
+replaces a /TAB/ character with a /SPC/:
+
+#+begin_src emacs-lisp
+(defun my-latex-filter-tabs (text backend info)
+    (when (org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string "	" "  " text)))
+      
+(add-to-list 'org-export-filter-src-block-functions
+   'my-latex-filter-tabs)
+#+end_src
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

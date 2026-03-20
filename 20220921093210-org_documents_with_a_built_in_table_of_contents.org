@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       7369228C-5CD4-4434-93A4-226C4F9679FD
+:END:
+#+title: Org documents with a built-in table of contents
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+1. Install /org-make-toc/ ([[https://github.com/alphapapa/org-make-toc][GitHub - alphapapa/org-make-toc: Automatic
+   tables of contents for Org files]]) from melpa.
+2. Create a /Table of Contents/ headers with a =:noexport:= modifier (this
+   is necessary because exported documents have their own table of
+   contents).
+3. From the header, run =org-make-toc-insert= with an =include= property
+   of =all=.
+4. Run =org-make-toc= to create the initial table of contents.
+5. Update the document to run =org-make-toc= on save.
+
+#+begin_example :export code
+# Local Variables:
+# before-save-hook: org-make-toc
+# End:
+#+end_example
+
+See [[https://github.com/alphapapa/org-make-toc#usage][usage]] for more details.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

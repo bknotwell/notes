@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       46AF2FF9-73E8-4CAE-9AE1-44DCF02B9F53
+:END:
+#+title: Print Makefile rules
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+You can see all the rules for a [[https://gnu.org/software/make][gmake]] Makefile with the =make -p=
+command.  It can be run in a directory with or without a /Makefile/.
+
+[[id:2070E582-F71A-47A8-838F-85A7D3556C8D][Gmake fun]]
+[[file:sitemap.org][Sitemap]]
+

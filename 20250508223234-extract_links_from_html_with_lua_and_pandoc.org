@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       b263b428-5284-4f76-8c64-81d9fab808bc
+:END:
+#+title: Extract links from html with Lua and pandoc
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+It's easy to parse HTML files using [[https://www.lua.org][Lua]] [[https://pandoc.org/lua-filters.html#introduction][filters]] in [[https://pandoc.org][pandoc]].  The
+following script extracts all links starting with
+[[https://docs.google.com]] out of a parsed file:
+
+#+begin_src
+-- this was run against an exported google docs spreadsheet
+-- 
+-- printing out the link target for a match and return nothing
+-- so the element's deleted
+function Link(lnk)
+  if string.sub(lnk.target, 1, 23) == "https://docs.google.com"
+  then
+    print(lnk.target)
+  end
+  return {}
+end
+
+-- drop all other elements
+function Div(div) return {} end
+function Image(img) return {} end
+#+end_src
+
+See the [[https://pandoc.org/lua-filters.html#module-pandoc][module documentation]] for information on the available object
+types.
+
+[[id:07c0e5ba-0e0a-4bbb-aafa-d8107d16aaef][Pandoc notes]]
+[[file:sitemap.org][Sitemap]]
+

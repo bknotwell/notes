@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       2F069E17-1F9D-4406-8044-4583A7F8DEA2
+:END:
+#+title: JSON with SQLite
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Sqlite's [[https://www.sqlite.org/json1.html][JSON]] support is easy to use to dissect JSON API responses.
+It's slow without creating [[id:5B913FD2-F70F-485A-9C76-CD4CC669D8B5][SQLite virtual columns with indices]].
+
+Use the =json_extract= command.
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]
+

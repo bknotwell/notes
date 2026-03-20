@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       DEE85B81-6107-4203-88C0-AFB4BC2F5876
+:END:
+#+title: Emacs lisp examples
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+A container for snippets of Emacs lisp.
+
++ [[id:75C9F762-2B3D-458D-9143-00504670B1D4][File iteration and insertion]]
++ [[id:cf0be030-b8ab-4711-8de9-08988b2c6384][Advise a function and modify temporary buffer content]]
+
+[[id:1F4FD542-B073-44D6-97F0-0DD42FCAC1C5][Elisp tips]]
+
+[[file:sitemap.org][Sitemap]]
+

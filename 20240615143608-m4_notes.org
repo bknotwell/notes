@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       cce5217b-8cfc-4744-ada7-b54b2cc97b5b
+:END:
+#+title: M4 notes
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Notes on M4:
+
+- /m4_/ prefix :: always use the /-P/ command-line argument to reduce the
+  potential for namespace clashes.
+- [[https://unix.stackexchange.com/questions/280532/m4-macro-implementation-of-global-non-volatile-counter][incrementing a counter]] :: create a macro with an initialized counter
+  and create another macro  that redefines the counter and returns it.
+- [[https://www.gnu.org/software/m4/manual/html_node/Divert.html][divert]] :: allows a macro to write to multiple areas.  Useful when
+  you have a macro that generates information that's written in
+  multiple places.  Quotation is crucial to ensure the diversion
+  happens at the expected time as is understanding that [[https://www.gnu.org/software/m4/manual/html_node/Undivert.html][undivert]] sends
+  the output to the current diversion which may not be standard out.
+  As a special case, =divert(-number)= discards all data and is commonly
+  used when creating macro definitions to avoid spacing issues.
+- [[https://www.gnu.org/software/m4/manual/html_node/Dnl.html][dnl]] :: fix spacing problems by adding this macro in the right place.
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,79 @@
+:PROPERTIES:
+:ID:       AA2378F4-165B-4B36-AE0E-2921F9184D22
+:END:
+#+title: SQLite as a data validator
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+SQLite could be used as a library for a data validator.
+
+1. Create a table that details the data constraints.
+2. When a new piece of data arrives, create a new in-memory database
+   with the table's schema definition and try to insert the data in
+   the table.  If the insert succeeds, the data's valid.
+3. Delete the database.
+
+It has the benefit of allowing people to create declarative interfaces
+(in our case, a Slack modal dialog) without implementing the validator
+using procedural code.
+
+Example:
+
+#+begin_src sh :tangle tsql.sh
+  # load productname, component and assettype from kobani
+  # load github team names from github
+  sqlite3 $$.db <<EOF
+    CREATE TABLE IF NOT EXISTS p(
+        name TEXT
+    );
+    CREATE TABLE IF NOT EXISTS c(
+        name TEXT
+     );
+    CREATE TABLE IF NOT EXISTS a(
+        name TEXT
+     );
+    CREATE TABLE IF NOT EXISTS g(
+        name TEXT
+     );
+    INSERT INTO p VALUES('mt');
+    INSERT INTO c VALUES('ks');
+    INSERT INTO c VALUES('hs');
+    INSERT INTO a VALUES('img');
+    INSERT INTO g VALUES('dev');
+
+    CREATE TABLE IF NOT EXISTS validator(
+      summary TEXT,
+      gname TEXT,
+      jenkinsjob INT CHECK(jenkinsjob == 0 OR jenkinsjob == 1),
+      up INT CHECK(up == 0 OR up == 1),
+      pname TEXT,
+      cname TEXT,
+      atname TEXT,
+      template TEXT CHECK(template IN ('C', 'None')),
+      confirmname INT CHECK(confirmname == 0 OR confirmname == 1)
+    );
+
+    CREATE TRIGGER IF NOT EXISTS finalcheck
+    BEFORE INSERT ON validator
+    WHEN NEW.pname NOT IN (SELECT name from p) OR
+         NEW.cname IN (SELECT name from c) OR
+         NEW.atname NOT IN (SELECT name from a) OR
+         NEW.gname NOT IN (SELECT name from g)
+    BEGIN
+        SELECT RAISE(FAIL, "invalid p, c, a or g");
+    END;
+ 
+    -- the next two should succeed
+    INSERT INTO validator VALUES('hello world','dev',0,0,'mt','new-component','img','None',0);
+    INSERT INTO validator VALUES('hello world','dev',0,0,'mt','new-component2','img','None',0);
+    -- the next one should fail as the component name already exists
+    INSERT INTO validator VALUES('hello world','dev',0,0,'mt','ks','img','None',0);
+  EOF
+  rm -f $$.db
+#+end_src
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       9E661D35-6C15-4B0E-B059-353F07322F1C
+:END:
+#+title: Testing markdown documentation
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+When editing a markdown file in Fossil, changes can be tested with a
+command like the following:
+
+#+begin_src sh
+fossil test-markdown-render README.md > r.html; open r.html; rm r.html
+#+end_src
+
+[[id:2F45F4E6-5158-4C7C-BF21-38C305D7A8E0][Fossil tips]]
+
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       DF99CCE7-6B5C-4319-9613-58925183835E
+:END:
+#+title: Website setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+A checklist for setting up a new virtual machine with my ipeds
+application as well as my notes.  Instructions are specific to
+Unix-like systems:
+
+1. Install R using the system's package manager.
+2. Install the R packages needed for the application to run.
+   - shiny
+   - shinythemes
+   - shinyWidgets
+   - rmarkdown
+   - DT
+   - jsonlite
+   - markdown
+   - rclipboard
+3. Install nginx, certbot, git, gmake, cmake, gsed, node16, npm and
+   pandoc using your package manager.
+4. Setup DNS for your IP address.
+5. Setup a cert for the machine using the DNS name.
+6. Setup nginx for SSL and test the webserver.
+7. Clone the https://github.com/rstudio/shiny-server.git repository.
+8. [[https://github.com/rstudio/shiny-server/wiki/Building-Shiny-Server-from-Source][Build]] and install shiny server. *NB:* this will be the most
+   challenging part as the installation process is poorly documented.
+   - ARM64 on linux:  the install process is X86-64 specific so node
+     and pandoc need links to the correct executables.
+   - ARM64 on FreeBSD:  similar problem as previous with two
+     additional issues--the build system's use of /sed/ uses GNU
+     extensions so the /cmake/ setup needs a minor tweak:  ~s/sed/gsed/~
+     and the C++ program that does startup needs a minor change to
+     /launcher.cc/ to change ~/proc/%d/exe~ to ~/proc/%d/file~.
+9. Setup nginx to forward shiny requests to the server.
+10. Add the /shiny/ user without a login shell.
+11. Fix the pandoc and node links
+12. Start shiny server, create the appropriate directories and install
+    the default apps.
+    - create /srv/shiny-server directory
+    - FreeBSD-specific:  setup procfs
+    - add Shiny's /welcome.html/ and /sample-apps/ to the
+      ~/srv/shiny-server~ directory.
+13. Install our custom application's code and data:
+    - /app.R/ in ~/srv/shiny-server/ipeds~.
+    - /ipeds.RData/ and /README.md/ in =~shiny/ipeds/=.
+14. Create the ~/var/www/roam~ directory and copy all the exported roam
+    content into it.
+
+[[file:sitemap.org][Sitemap]]
+

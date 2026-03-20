@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       71706ecc-980e-468d-8eca-121e08dee6ae
+:END:
+#+title: Pandoc lua table filter
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+The code below takes a pandoc [[https://pandoc.org/chunkedhtml-demo/8.9-tables.html][table]] and creates N files (N == #rows)
+containing the cell information.
+
+#+begin_src lua
+function Table(tbl)
+    local simpleTable = pandoc.utils.to_simple_table(tbl)
+    local cvt = pandoc.utils.stringify  -- convenience
+
+    fnames = {}
+    for idx, row in ipairs(simpleTable.rows) do
+        --skip header
+        if idx >= 2
+            fname = 'outfile-' .. idx .. '.txt'
+            f = io.open(fname, "w")
+            f:write('Col1: ' .. cvt(row[1])) .. '\n')
+            f:write('Col2: ' .. cvt(row[2])) .. '\n')
+            f:write('Col3: ' .. cvt(row[3])) .. '\n')
+            f:write('Col4: ' .. cvt(row[4])) .. '\n')
+            fnames[#fnames + 1] = pandoc.Plain(fname)
+        end
+    end
+    return pandoc.List(fnames), false
+end
+#+end_src
+
+[[id:07c0e5ba-0e0a-4bbb-aafa-d8107d16aaef][Pandoc notes]]
+[[file:sitemap.org][Sitemap]]

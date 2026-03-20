@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       EC04385C-66D6-443E-B5B1-048F5266C836
+:END:
+#+title: Emacs tips
+#+SETUPFILE: ./latexcss.theme
+#+OPTIONS:  author:nil ^:nil html-postamble:nil
+
+Nuggets of information on Emacs:
+
++ [[id:51AB1ED4-2345-471B-B30C-8DD7032F0B1B][Spaces In Roam Node Names]]
++ [[id:B97E50CA-9595-46A9-9A7A-54DC25F32CE1][Indirect Buffers]]
++ [[id:5725861B-99B6-48F6-989A-022BF3E0F42C][Org-roam header snippet]]
++ [[id:D5AE48C4-D509-4C74-B872-56AB6FC9AC4C][Org-roam setup for publishing]]
++ [[id:1F4FD542-B073-44D6-97F0-0DD42FCAC1C5][Elisp tips]]
++ [[id:CA604978-EC48-41AC-84FA-259383A58E2D][Babel graphics output]]
++ [[id:3A79CAB1-746C-41E5-A706-59A0D0880EA5][Org publish with title changes]]
++ [[id:C4D18672-F420-4DEC-BE6C-0DDB20951F85][C mode indentation level]]
++ [[id:DBF8C200-64F9-4CDE-8AD9-2360666D5AE2][Fixing bad roam export links]]
++ [[id:E0F19F14-46F6-4116-937E-5F0078E7DC1A][Keyboard Macros]]
++ [[id:7369228C-5CD4-4434-93A4-226C4F9679FD][Org documents with a built-in table of contents]]
++ [[id:86B88F7E-73A4-4DF7-9DCF-71A2CA79C3FF][Org-mode babel tips]]
++ [[id:CB0E16E7-6CCD-4F1C-97C9-DACB3B7C3293][Org-mode longtable]]
++ [[id:644FEF58-C170-416D-AD4D-0F43BB1B7225][Copy a meta-programmed string to clipboard]]
++ [[id:AC13BDC9-26D7-44F9-B1C0-DD7418EB0A1E][Switch orgmode table to table-mode]]
++ [[id:07D73B66-79AF-4B9F-8E6E-2AB9F9FD88B7][Org-mode PDF export with tabs]]
++ [[id:1672C346-6610-4F9F-8049-B4DE06EC2CAE][Calling Emacs lisp as a script]]
++ [[id:DEE85B81-6107-4203-88C0-AFB4BC2F5876][Emacs lisp examples]]
++ [[id:904CB9C3-7A3F-4FA8-9D5A-65967259B8CA][Table addressing tips]]
++ [[id:79217A40-2AF9-4680-8EEF-5DFC7115F443][Table Spreadsheet Editing]]
++ [[id:4db7cee9-3d68-4159-8247-991691f35e9c][Regular expression building and replacement]]
++ [[id:be2e825e-bf98-4acd-b030-417375b908cd][Updating elpa keyring]]
++ [[id:650040a5-e777-4334-9c40-ab117c8d303e][Keyboard macros with variation]]
+
+[[file:sitemap.org][Sitemap]]

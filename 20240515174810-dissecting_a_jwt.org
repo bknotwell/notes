@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       5659B212-21A7-4BE5-A2B3-B177163DA6F8
+:END:
+#+title: Dissecting a JWT
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+A [[https://datatracker.ietf.org/doc/html/rfc7519][JWT]] token consists of the following:
+
++ [[https://datatracker.ietf.org/doc/html/rfc7519#section-5][JOSE header]] [example: /{"alg":"HS256","typ":"JWT"}/​]
++ [[Https://datatracker.ietf.org/doc/html/rfc7519#section-4][claims object]] [example: /{"tokenType":"query","iat":1715800500,"iss":"me","sub":"my-subject"}/​]
++ signature
+
+Tokens have three sections are separated by a period:
+
+=b64Encode(JOSE header) + . + b64Encode(claims object) + . + b64Encode(signature)=
+
+The signature is computed on the following:
+
+=b64Encode(JOSE header) + . + b64Encode(claims object)=
+
+A sample openssl command:
+
+#+begin_src sh
+# the -n is crucial as you don't include the newline in the signature
+# similarly, the -A does the same thing for the openssl command
+echo -n "${hdr}.${claims}" | \
+openssl dgst -sha256 -hmac my-magic-key-here -binary | \
+openssl base64 -A
+#+end_src
+
+*NB:* forgetting the =-binary= option return an ASCII representation of
+the hash which requires converting 2-bytes into the equivalent
+hexadecimal number.  Done in python:
+
+#+begin_src python
+# reads hash in ASCII from stdin
+from struct import pack
+from base64 import b64encode
+
+fmt=32 * 'B'
+data = input()
+data = list(map(lambda x: int(data[x:x+2], 16), list(range(0, len(data), 2))))
+print(b64encode(pack(fmt, *data)))
+#+end_src
+
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+[[file:sitemap.org][Sitemap]]

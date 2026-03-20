@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       1D29150A-5838-4FE6-BD0F-6F508DAFE041
+:END:
+#+title: SQLite upsert
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+[[https://www.sqlite.org][Sqlite]] has an [[https://www.sqlite.org/lang_UPSERT.html][upsert]] capability that makes it easy to write code that
+either inserts a row or updates it if it exists already.
+
+A simple example:
+
+#+begin_example
+INSERT INTO globals VALUES('response', 'data') ON CONFLICT(key) DO UPDATE SET value='data';
+#+end_example
+
+For the above to work correctly, =key= must have a =UNIQUE= constraint:
+
+#+begin_example
+CREATE TABLE IF NOT EXISTS globals (
+    key TEXT NOT NULL UNIQUE,
+    value TEXT NOT NULL
+);
+#+end_example
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]
+

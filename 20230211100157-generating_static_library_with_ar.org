@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       6CC35590-F3AC-40CF-93F9-7F68EB627A23
+:END:
+#+title: Generating static library with ar
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Create an libxxx.a in the following way:
+
+=ar -crs libxxx.a *.o=
+
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

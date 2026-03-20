@@ -1,0 +1,51 @@
+:PROPERTIES:
+:ID:       CA8E0FD0-621D-467E-8212-82890E98AB55
+:END:
+#+title: Broncos QB productivity
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+#+begin_center
+Final update:  Russell Wilson ended the season with 16 TDs.
+#+end_center
+
+Using the data from [[https://www.espn.com/nfl/player/gamelog/_/id/14881/russell-wilson][here]] and a Monte Carlo simulation, predict the
+Broncos' starting quarterback's number of touchdown passes for the
+season.  The distribution of results:
+
+#+begin_src R :session R-TDs :exports both :results output graphics file :file TDs.svg
+rw <- c(1, 1, 0, 2, 0, 0, 1, 1, 1, 0, 1, 0, 3)
+salary <- 49000000
+game <- function() sum(rw) + sum(sample(rw, (16 - length(rw)), replace=TRUE))
+TDs <- sapply(1:20000, function (i) game())
+hist(TDs, main="Distribution of Russell Wilson's number of TD passes(2022)",
+     ylab='', yaxt='n')
+#+end_src
+
+Assuming current productivity, the probability of hitting a particular
+number of TD passes as well as the price/pass:
+
+#+begin_src R :session R-TDs :exports both :results output raw
+  t <- table(TDs)
+  cat('|*TDs*|*Probability*|*M$/TD*|*Cumulative*|\n|-|-|-|-|\n')
+  idx <- 1
+  cumulative <- 0
+  while(idx < length(t)) {
+    percent <- (t[[idx]] / length(TDs)) * 100
+    cumulative <- cumulative + percent
+    cat("|", names(t)[idx], "|", sprintf("%.01f%%", percent),
+        "|", sprintf("%.01f|",
+        (salary / as.numeric(names(t)[idx]))/1000000.0),
+        sprintf("%.01f|\n", cumulative))
+    idx <- idx + 1
+  }
+#+end_src
+
+#+RESULTS:
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

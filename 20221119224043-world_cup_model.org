@@ -1,0 +1,131 @@
+:PROPERTIES:
+:ID:       38140766-8FFD-4023-B1EA-CE7FB1876790
+:END:
+#+title: World Cup Model
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+* Problem
+
+I needed a method to fill out my bracket so I decided to write a
+simple model using data from [[https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017][kaggle]].
+
+* Load the data
+
+Drop all friendlies and unplayed games from the dataset:
+#+begin_src R :session R-world-cup :exports both :results output
+results <- read.csv('~/datasets/results.csv')
+results <- results[results$tournament != 'Friendly' & (! is.na(results$home_score)),]
+cat(nrow(results), 'matches loaded\n')
+#+end_src
+
+#+RESULTS:
+: 26659 matches loaded
+
+Predict a game score by the following [[https://en.wikipedia.org/wiki/Monte_Carlo_method][Monte Carlo simulation]]:
+
++ take each team's last 6 games goals-scored and allowed.  *NB:* value
+  newer games more highly than older ones.  Algorithm:  6th,5th game -- 1,
+  4th,3rd, game -- 2 and 2nd/1st game -- 4.  Possibly bad assumption:
+  a team has at least six competitive games.
++ bootstrap goals scored/allowed for both teams with a reduction for
+  games with teams that didn't qualify for the World Cup.  Add goals
+  scored/allowed (opposites) for each team, divide by two and round.
+  Do this 10000 times and take the most common score.
+
+#+begin_src R :session R-world-cup :exports code
+  qualifiers <- c('Qatar', 'Ecuador', 'Senegal', 'Netherlands', 'England', 'Iran', 'United States',
+                  'Wales', 'Argentina', 'Saudi Arabia', 'Mexico', 'Poland',
+                  'France', 'Australia', 'Denmark', 'Tunisia',
+                  'Spain', 'Costa Rica', 'Germany', 'Japan', 'Belgium', 'Canada', 'Morocco',
+                  'Croatia', 'Brazil', 'Serbia', 'Switzerland', 'Cameroon', 'Portugal', 'Ghana',
+                  'Uruguay', 'Korea Republic')
+
+  adjmultiplier <- function(team, multiplier) ifelse(team %in% qualifiers, multiplier, multiplier * .5)
+
+  scored <- function(team, row, multiplier) {
+     if(row$home_team == team)
+        rep(row$home_score, adjmultiplier(row$away_team, multiplier))
+     else
+        rep(row$away_score, adjmultiplier(row$home_team, multiplier))
+  }
+
+  allowed <- function(team, row, multiplier) {
+    if(row$home_team == team)
+       rep(row$away_score, adjmultiplier(row$away_team, multiplier))
+    else
+       rep(row$home_score, adjmultiplier(row$home_team, multiplier))
+  }
+
+  bootstrap <- function(team, operation_=scored)  {
+    d <- tail(results[results$home_team == team | results$away_team == team,], 6)
+    op <- function (row, multiplier) operation_(team, d[row,], multiplier)
+    c(op(1, 1), op(2, 1), op(3, 2), op(4, 2), op(5, 4), op(6, 4))  
+  }
+
+  game <- function(home, away) {
+    hs <- sample(bootstrap(home), 10000, replace=TRUE)
+    ha <- sample(bootstrap(home, allowed), 10000, replace=TRUE)
+    as <- sample(bootstrap(away), 10000, replace=TRUE)
+    aa <- sample(bootstrap(away, allowed), 10000, replace=TRUE)
+    table(data.frame(home=round((hs + aa) / 2), away=round((as + ha) / 2)))
+  }
+#+end_src
+
+#+RESULTS:
+
+Show a simulated game:
+
+#+begin_src R :session R-world-cup :exports both :results output
+praint(game('England', 'United States'))
+#+end_src
+
+The score pair with the largest number is the most likely outcome.
+
+** Predictions
+
+| *Game*                   | *Predicted* | *Actual* |
+|------------------------+-----------+--------|
+| Qatar/Ecuador          |       0-0 |    0-2 |
+| England/Iran           |       2-2 |    6-2 |
+| Senegal/Netherlands    |       2-2 |    0-2 |
+| United States/Wales    |       2-1 |    1-1 |
+| Argentina/Saudi Arabia |       2-0 |    1-2 |
+| Denmark/Tunisia        |       2-0 |    0-0 |
+| Mexico/Poland          |       2-0 |    0-0 |
+| France/Australia       |       0-0 |    4-1 |
+| Morocco/Croatia        |       2-2 |    0-0 |
+| Germany/Japan          |       2-2 |    1-2 |
+| Spain/Costa Rica       |       0-1 |    7-0 |
+| Belgium/Canada         |       0-2 |    1-0 |
+| Switzerland/Cameroon   |       2-2 |    1-0 |
+| Uruguay/South Korea    |       0-1 |    0-0 |
+| Portugal/Ghana         |       2-0 |    3-2 |
+| Brazil/Serbia          |       2-2 |    2-0 |
+| Wales/Iran             |       4-2 |        |
+| England/US             |       2-2 |        |
+| Netherlands/Ecuador    |       1-0 |        |
+| Poland/Saudi Arabia    |       0-0 |        |
+| Argentina/Mexico       |       0-0 |        |
+| Japan/Costa Rica       |       4-0 |        |
+| Tunisia/Australia      |       2-0 |        |
+| France/Denmark         |       0-2 |        |
+| Japan/Costa Rica       |       4-0 |        |
+| Spain/Germany          |       2-2 |        |
+| Belgium/Morocco        |       0-0 |        |
+| Croatia/Canada         |       2-0 |        |
+| Cameroon/Serbia        |       1-1 |        |
+| Brazil/Switzerland     |       2-0 |        |
+| South Korea/Ghana      |       2-0 |        |
+| Portugal/Uruguay       |       2-2 |        |
+
+** TODO -- factor in geography
+
+Some geographies\mdash{}[[https://www.uefa.com/][UEFA]], [[https://www.conmebol.com/][CONMEBOL]] or [[https://www.cafonline.com/][CAF]]\mdash{}are stronger than others\mdash{}[[https://www.the-afc.com/en/national/fifa_world_cup/home.html][AFC]], [[https://www.oceaniafootball.com/][OFC]] and [[https://www.concacaf.com/][CONCACAF]].
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

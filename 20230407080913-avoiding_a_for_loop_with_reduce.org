@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       9D0EE948-2344-4152-948F-DBF3D22455B2
+:END:
+#+title: Avoiding a for loop with reduce
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+For loops aren't idiomatic in R as the family of /apply/ functions are
+typically used instead but you might want one when you need an
+accumulator:
+
+#+begin_src R
+total <- 0
+for(i in 1:6) {
+    total <- total + i
+}
+print(total)
+#+end_src
+
+The [[https://blog.zhaw.ch/datascience/r-reduce-applys-lesser-known-brother/][Reduce]] function improves this:
+
+#+begin_src R
+# the zero is optional
+total <- Reduce(function(x, y) x + y, 1:6, 0)
+#+end_src
+
+For this example:  =total <- sum(1:6)= is the simplest and fastest (=sum=
+is a primitive) operation. 
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]

@@ -1,0 +1,116 @@
+:PROPERTIES:
+:ID:       B5EDDA1D-70EB-49E2-BBD0-8CE8B3861ED7
+:END:
+#+TITLE: Table examples
+#+SETUPFILE: ./latexcss.theme
+#+OPTIONS: author:nil ^:nil html-postamble:nil
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+
+[[https://www.reddit.com/r/emacs/comments/ldoqqb/using_orgmode_as_notion_abusing_table_relations/][This reddit post]] stimulated some thought.
+
+A table with three columns and we want the final column to be an
+enumerated string value (Not Started | In Progress | Complete |
+Cancelled).
+
+Easy ways to automatically add a row to a table:
+- write an interactive function
+- a global [[https://www.gnu.org/software/hyperbole/][Hyperbole]] button
+- an org capture template
+
+Regardless of method, we'll use =ido-completing-read= to
+prompt the user for a choice and =insert= to insert the choice at
+point into the current buffer:
+
+#+NAME: GetChoice
+#+begin_src emacs-lisp :exports code
+  (insert (ido-completing-read "What's your status?" 
+		       '("Not Started" "In Progress" "Complete" "Cancelled")))
+#+end_src
+
+An interactive function would be simple:
+#+begin_src emacs-lisp :exports code :noweb yes
+  ; running this from an org file clutters the note
+  (defun my-get-status ()
+    (interactive)
+     <<GetChoice>>)
+#+end_src
+
+#+RESULTS:
+: my-get-status
+
+Programmatically, you would use it like this: =(my-get-status)=.
+
+A [[https://www.gnu.org/software/hyperbole/#buttons][Hyperbole global button]] would be easier.  Type the following:
+{Ctrl-h h g c my-task-status RET  
+    (insert (ido-completing-read "What's your status?" 
+		       '("Not Started" "In Progress" "Complete" "Cancelled")))
+}
+
+You can then activate the global button in any buffer:
+
+{Ctrl-h h g a my-task-status RET}
+
+Both of the above methods, require you to have the org file open with
+your point in the right place in the file.  With an org-capture
+template, you'd have an easier time of it.
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(org-capture-templates
+     '(("t" "Tasklist" table-line
+	(file+headline "~/roam/table-examples.org" "Tasklist")
+	"|%^{Who:}|%^{What:}|%(ido-completing-read \"What's your status?\" 
+		       '(\"Not Started\" \"In Progress\" \"Complete\" \"Cancelled\"))|"))))
+#+end_src
+
+You execute the above template by running the =org-capture= function
+(many people bind {Ctrl-c c} to this function).
+
+* Tasklist
+#+Name:  Tasklist
+|-------+-----------------------+-------------|
+| *who* | *what*                | *Status*    |
+|-------+-----------------------+-------------|
+| Huey  | build a thing         | Complete    |
+| Dewey | build another thing   | In Progress |
+| Louie | yet another thing     | Not Started |
+| Huey  | build a doublething   | Cancelled   |
+| Huey  | build a tripletething | In Progress |
+
+* Hooking two tables together
+** All /In Progress/ tasks:
+#+begin_src emacs-lisp :exports both :results output raw :var tasks=Tasklist[1:-1]
+  (princ "|-|-\n| *Who* | *What* |\n|-|-|\n")
+  (dolist (element tasks nil)
+      (if (string-equal (caddr element) "In Progress") (princ (concat "|"  (car element) "|" (cadr element) "|\n"))))
+  (princ "|-|-|\n")
+#+end_src
+
+#+RESULTS:
+| *Who* | *What*                |
+| Dewey | build another thing   |
+| Huey  | build a tripletething |
+
+** Finding everyone without a task
+Since idle nephews fret their uncle, we'll flag anyone without an /In
+Progress/ task:
+
+#+begin_src emacs-lisp  :exports both :results output :var tasks=Tasklist[1:-1]
+    (setq nephews '())
+    (dolist (element tasks nil)
+      (let* ((name (car element))
+	     (in-progress (if (string-equal (caddr element) "In Progress") 1 0))
+	     (nephew (alist-get name nephews nil nil #'equal)))
+      (if (null nephew) (add-to-list 'nephews (cons name in-progress))
+      (setf (alist-get name nephews nil nil #'equal) (+ nephew in-progress)))))
+   (dolist (element nephews nil) (if (= (cdr element) 0) (princ (concat (car element) " needs tasking"))))
+#+end_src
+
+#+RESULTS:
+: Louie needs tasking
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs Tips]]
+
+[[file:sitemap.org][Sitemap]]

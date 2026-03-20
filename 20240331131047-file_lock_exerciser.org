@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       517F5921-1DB3-419B-A48B-7F298CDC431F
+:END:
+#+title: File lock exerciser
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+The code below was used to exercise file locks on a V4 NFS filesystem.
+It compiles w/o warnings on FreeBSD and has fun on the AMD64 and ARM64
+architectures.
+
+#+begin_src C
+  #include <stdio.h>
+  #include <unistd.h>
+  #include <stdlib.h>
+  #include <fcntl.h>
+  #include <sys/file.h>
+  #include <errno.h>
+
+  int main(void) {
+
+      int s = open("/efs/mylock.lock", O_WRONLY | O_CREAT, 0666);
+
+      if(s == -1)
+          return(fprintf(stderr, "Failed opening lockfile: %d\n", errno),
+                 EXIT_FAILURE);
+      for( ; ; ) {
+          if(flock(s, LOCK_EX | LOCK_NB) == -1) {
+              printf("Lock acquisition failed %s\n",
+                     errno == EWOULDBLOCK ? "normal" : "true failure");
+              usleep(100000);
+
+          } else {
+              printf("Lock acquisition succeeded\n");
+              usleep(200000);
+              if(flock(S, LOCK_UN) == -1)
+                  return(fprintf(stderr, "Failed unlocking file: %d\n", errno),
+                         EXIT_FAILURE);
+          }
+      }
+  }
+
+#+end_src
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]

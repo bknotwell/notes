@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       DA330991-1926-4E41-97DC-8AEEC7D243A3
+:END:
+#+title: FreeBSD upgrade
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Notes from the FreeBSD 14 upgrade
+
+1.  Needed to reinstall pkg and upgrade everything.
+2.  The /shiny-server/ installation needed rebuilt (see [[id:ED31F329-92CA-4FAB-AD9F-A7200D51CC1A][Installing Shiny
+   Server on AARM64]]).
+3. Reinstall the /oci-cli/ command with a =python -m pip install oci-cli=
+   command.  This may require [[https://pip.pypa.io/en/stable/installation/][installing pip]].
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]
+

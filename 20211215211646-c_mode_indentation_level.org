@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       C4D18672-F420-4DEC-BE6C-0DDB20951F85
+:END:
+#+title: C mode indentation level
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+To set Emacs' indentation for C, set the =c-basic-offset= customization
+variable.
+
+[[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs tips]]
+
+[[file:sitemap.org][Sitemap]]
+

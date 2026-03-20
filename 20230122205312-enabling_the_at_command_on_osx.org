@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       4B2FA699-BDFA-4435-B3F6-47FF25282C98
+:END:
+#+title: Enabling the at command on OSX
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+You must enable the =atrun= command:
+   =sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.atrun.plist=
+
+=man atrun= for slightly more information.
+
+You also need to setup =/usr/libexec/atrun= to have /Full Disk Access/ by
+going to the /Security & Privacy/ area in settings and adding it.  *NB:*
+to access the =/usr/libexec= directory, you need to use the
+{Cmd-Shift-G} key chord to open a dialog.
+
+[[file:sitemap.org][Sitemap]]
+

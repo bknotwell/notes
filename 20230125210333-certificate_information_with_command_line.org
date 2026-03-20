@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       E0743337-3AFE-4FCD-B06E-DAFF3078E1CE
+:END:
+#+title: Certificate information with command-line
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Getting certificate information from a local certificate:
+=openssl x509 -in filename.crt -text=
+
+From a remote server:
+
+#+begin_src sh
+  openssl s_client -connect ip:port 2>/dev/null | \
+    sed '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/!d' | \
+    openssl x509 -text
+#+end_src
+
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+
+[[file:sitemap.org][Sitemap]]
+

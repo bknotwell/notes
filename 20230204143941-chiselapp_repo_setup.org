@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       F426F3BC-53DD-4CC7-BB63-DE5682352323
+:END:
+#+title: Chiselapp repo setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Setting up a Chisel app repository:
+
+1. Login to [[https://chiselapp.com/][chiselapp.com]] and create a repo.
+2. Setup your local repo (see [[id:6B7B3019-5399-4665-B6B5-3DABAA1BD944][Repo creation]]) to point to your new
+  chisel app repo.
+3. Set the fossil user default: =fossil user default name=
+4. Do your commit as that user.
+4. Do a push like the following: `fossil push
+   https://myuser@chiselapp.com/user/myuser/repository/myrepo`.
+
+Make sure to have the system remember your password.
+
+[[id:2F45F4E6-5158-4C7C-BF21-38C305D7A8E0][Fossil tips]]
+
+[[file:sitemap.org][Sitemap]]
+

@@ -1,0 +1,97 @@
+:PROPERTIES:
+:ID:       B2E35F95-8A5C-49AC-8F48-EDDFE9C820CE
+:END:
+#+title: Estimating from a linear model
+#+OPTIONS: ^:nil author:nil html-postamble:nil num:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Avoiding relearning this for the fifth or sixth time.  Uses the
+dataset of [[https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war?select=russia_losses_personnel.csv][Russian casualties in Ukraine]].
+
+First load the dataset:
+
+#+begin_src R :session R-russian-casualties :var filename="c:/Users/bknot/AppData/Roaming/roam/russia_losses_personnel.csv" :exports both :results output graphics file :file russian-losses.svg
+  data <- read.csv(filename)
+  data$Date <- as.Date(data$date)
+  data$numdate <- as.numeric(data$Date, origin='1970-01-01')
+  plot(data$Date, data$personnel, main='Russian personnel losses',
+       xlab='Date', ylab='Count', pch=20)
+  m <- lm(personnel ~ Date, data = data)
+  abline(m)
+  interval <- floor((data$Date[nrow(data)] - data$Date[1]) / 4)
+  l <- c(data$Date[1], data$Date[1] + interval,
+         data$Date[1] + 2 * interval, data$Date[nrow(data)])
+  axis(1, at=seq(1, nrow(data), as.numeric((-interval)+1)), labels=l)
+#+end_src
+
+Summarize the dataset (casualties/day):
+#+begin_src R :session R-russian-casualties :exports both :results output
+perday <- -diff(data$personnel)
+# remove the outliers from obvious data entry errors
+perday <- perday[perday != 0 & perday < 2500]
+summary(perday)
+#+end_src
+
+Total casualties:  src_R[:session R-russian-casualties]{head(data, 1)$personnel}
+
+Graphic summary:
+#+begin_src R :session R-russian-casualties :exports both :results output graphics file :file russian-losses-boxplot.svg
+boxplot(perday, main='Distribution of casualties/day')
+#+end_src
+
+#+RESULTS:
+[[file:russian-losses-boxplot.svg]]
+
+Predict two things--casualties on 2023/02/22 and when they'll
+hit 1000000.
+
+* Estimated casualties for 2023/02/22
+
+Show the summary data:
+#+begin_src R :session R-russian-casualties :exports both :results output
+print(summary(m))
+#+end_src
+
+Estimate:
+#+begin_src R :session R-russian-casualties :exports both
+round(predict(m, newdata=data.frame(Date=as.Date('2023-02-22',
+                                                 origin='1970-01-01'))))
+#+end_src
+
+* Estimated date when they hit 1000000 casualties
+
+#+begin_src R :session R-russian-casualties :exports both
+  m2 <- lm(Date ~ personnel, data[1:90,])
+  as.Date(predict(m2, newdata=data.frame(personnel=1000000)),
+          origin='1970-01-01')
+#+end_src
+
+** Both predictions with confidence intervals
+
+Show confidence intervals instead of specific numbers.
+
+#+begin_src R :session R-russian-casualties :exports both
+  m4 <- lm(personnel ~ Date, data)
+  res <- round(predict(m4, newdata=data.frame(Date=as.Date('2023-02-22',
+                                                       origin='1970-01-01')),
+                       interval='confidence', level=0.95))
+
+   matrix(c(c('expected', 'lwr', 'upr'),
+          as.integer(round(res / 100) * 100)), byrow=TRUE, nrow=2)
+#+end_src
+
+#+begin_src R :session R-russian-casualties :exports both
+  m3 <- lm(numdate ~ personnel, data[1:90,])
+  res <- as.Date(predict(m3, newdata=data.frame(personnel=1000000),
+                         interval='confidence',level=0.95), origin='1970-01-01')
+   matrix(c(c('expected', 'earliest', 'latest'),
+          sprintf("%s", res)), byrow=TRUE, nrow=2)
+#+end_src
+
+* Links
+
++ [[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
++ [[id:D74D157E-6A51-4058-A25C-7936103B542F][Download file from Kaggle w/o a browser]]
+
+[[file:sitemap.org][Sitemap]]

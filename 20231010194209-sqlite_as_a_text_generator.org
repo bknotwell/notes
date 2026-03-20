@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       C973F27A-C9EC-45D0-936B-A8307FF2C430
+:END:
+#+title: SQLite as a text generator
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+SQLite can be to generate complex text output by setting the query
+separator to a =''= character on the command-line.  Likewise, the
+[[https://www.sqlite.org/lang_corefunc.html#replace][replace]] and [[https://www.sqlite.org/lang_corefunc.html#substr][substr]] functions can be used to transform data.
+
+#+begin_src sh
+sqlite3 -separator '' t.db<<EOF
+   SELECT 'Filename: ', REPLACE(name, '.exe', '.c'), '  ::  Function: ',
+          SUBSTR(functionname, 4);
+      FROM table;
+EOF
+#+end_src
+
+[[id:0136C69A-A064-4DC8-8AE9-E00C5BEEB996][SQLite tips]]
+
+[[file:sitemap.org][Sitemap]]

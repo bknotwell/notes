@@ -1,0 +1,61 @@
+:PROPERTIES:
+:ID:       F897FFDB-B4DF-4BC9-AA08-E71A20A278AF
+:END:
+#+title: POSIX-compliant mutex in a script
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+There are two ways to create a POSIX-compliant mutex in a script:
+
+- mkdir :: the [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/mkdir.html][mkdir]] utility's default behavior throws an error if the
+  directory already exists.
+- noclobber :: the [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html][Bourne shell]] has a =set -c= option preventing the
+  shell from truncating an existing file.
+
+Example code:
+
+#+begin_src h
+MAINPID=$$
+
+mutex_acquire() {
+   set -C
+   while :
+   do
+       echo "acquiring $1" 1>&2
+       echo $$ > /tmp/localfile.$MAINPID 2>/dev/null
+       if [ $? -ne 0 ]
+       then
+           echo "sleeping $1" 1>&2
+           sleep 1
+       else
+           break
+       fi 
+   done 
+}
+
+mutex_release() {
+    rm -f /tmp/localfile.$MAINPID
+    echo Released 1>&2
+}
+
+wrap() {
+    mutex_acquire $1
+    shift
+    $*
+    mutex_release
+}
+
+wrap 1 echo "1 is acquired"&
+wrap 2 echo "2 is acquired"&
+wrap 3 echo "3 is acquired"&
+wrap 4 echo "4 is acquired"&
+wrap 5 echo "5 is acquired"&
+wait
+#+end_src
+
+[[id:AC41605D-A1F2-43AB-B4E9-1C395EB9B345][Unix tips]]
+
+[[file:sitemap.org][Sitemap]]
+

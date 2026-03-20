@@ -1,0 +1,61 @@
+:PROPERTIES:
+:ID:       2BC0AB37-FDB2-426D-B323-75C4FF5C4B8F
+:END:
+#+title: IPEDS data download and extract
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+The federal government's [[https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx?gotoReportId=7&fromIpeds=true][IPEDS data]] is available on a yearly basis.
+The shell below can download and extract it:
+
+#+begin_src sh
+#!/bin/sh
+# $1 is a year $2 is the financial year
+URL=https://nces.ed.gov/ipeds/datacenter/data
+
+for file in  F__F1A F__F2 F__F3 SFA SFAV
+do
+    if [ $(echo $file | grep -c '__') -eq 1 ]
+    then
+        base=$(echo $file | sed "s/__/$2_/")
+    else
+        base=$file$2
+    fi
+    curl -s -O $URL/$base.zip &
+    curl -s -O $URL/${base}_Dict.zip &
+    wait
+    unzip ${base}.zip
+    unzip ${base}_Dict.zip
+
+    rm ${base}.zip
+    rm ${base}_Dict.zip
+
+done
+
+for file in HD IC IC__Ay IC__PY FLAGS EFFY EFFY__DIST EFIA ADM EF_A EF_CP \
+      EF_B EF_C EF_D EF_A_DIST C__A C__B C__C C_DEP SAL__IS SAL__NIS \
+      S__OC S__SIS S__IS S__NH EAP GR GR__L2 GR__PELL_SSL OM
+do
+    if [ $(echo $file | grep -c '__') -eq 1 ]
+    then
+        base=$(echo $file | sed "s/__/$1_/")
+    elif [ $(echo $file | grep -c '_') -eq 1 ]
+    then
+        base=$(echo $file | sed "s/_/$1/")
+    else
+        base=$file$1
+    fi
+    curl -s -O $URL/$base.zip &
+    curl -s -O $URL/${base}_Dict.zip &
+    wait
+    unzip ${base}.zip
+    unzip ${base}_Dict.zip
+
+    rm ${base}.zip
+    rm ${base}_Dict.zip
+done
+#+end_src
+[[file:sitemap.org][Sitemap]]
+

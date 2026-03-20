@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       A97874B5-A74B-4660-A455-3E0274FE24BD
+:END:
+#+title: Ghostscript hints
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+Some hard-earned information about [[https://www.ghostscript.com][Ghostscript]] which can be installed
+with the following command:  =brew install ghostscript=
+
+* How to get the number of pages in a PDF?
+
+#+begin_src sh
+# the -I. allows the interpreter to read the filename.pdf
+# the rest is a stack-based command
+gs -I. -q -dNODISPLAY -c "(filename.pdf) (r) file runpdfbegin pdfpagecount = quit"
+#+end_src
+
+* How to split a document into individual files?
+
+Imagine you have a PDF file\mdash{}file2convert.pdf\mdash{}with 4 pages:
+
+#+begin_example
+  # Bourne shell required for the shell globbing
+  file=file2convert.pdf
+  for pg in $(seq 1 4)
+  do
+    ofile=${file%.pdf}-$pg
+    gs -q -dNOPAUSE -sDEVICE=pdfwrite -dFirstPage=$pg -dLastPage=$pg -o $ofile $file
+  done
+#+end_example
+
+[[file:sitemap.org][Sitemap]]
+

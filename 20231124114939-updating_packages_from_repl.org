@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       3F405D8C-8052-4038-83B3-0F9C1FD00689
+:END:
+#+title: Updating packages from repl
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+Updating R packages without a GUI is easy: =update.packages(ask=FALSE)=.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]
+

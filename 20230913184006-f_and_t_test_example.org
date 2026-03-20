@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       F2F873BA-66CE-4165-B62E-0EAA5F023B90
+:END:
+#+title: F and t test example
+#+OPTIONS: ^:nil author:nil html-postamble:nil num:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+This document shows how to compare means and variances in a rigorous
+way using a [[https://en.wikipedia.org/wiki/Student%27s_t-test][t-test]] or an [[https://en.wikipedia.org/wiki/F-test][F-test]] to determine the statistical
+significance of the differences. The following example uses four
+vector containing 250 elements of [[https://en.wikipedia.org/wiki/Normal_distribution][normally distributed]] data with means
+in the range $[115 - 124]$ and deviations in the range $[8 - 15]$.
+
+#+begin_src R :session R-tests :exports both :results output graphics file :file tests-boxplot.svg
+set.seed(33333333)
+one <- rnorm(250, 120, 10)
+two <- rnorm(250, 124, 10)
+three <- rnorm(250, 120, 8)
+four <- rnorm(250, 115, 15)
+boxplot(one, two, three, four)
+#+end_src
+
+** 1 vs 2 mean and variance
+
+We expect 1 and 2 to have similar variances and different means.  Visually, it looks like 2 is more variant.
+
+#+begin_src R :session R-tests :exports both :results output
+print(t.test(one, two))
+print(var.test(one, two))
+#+end_src
+
+The t-test is definitive (2.485e-05 is a tiny number) and we can be confident the means are different.  The variance's F-test shows the ratios of the variances to be different but we can't be confident they are as we expect this ~80% variance ratio to occur randomly about 13.3% of the time.  If we had relied on the graphic to flag a change in variance, it would've been a false positive.
+
+** 1 vs 3 mean and variance
+
+We expect one and three to have identical means and different variance:
+
+#+begin_src R :session R-tests :exports both :results output
+print(t.test(one, three))
+print(var.test(one, three))
+#+end_src
+
+The means show minimal differences that we'd expect to show up randomly 34% of the time.  The ratio of variances is close to what we expect but we still shouldn't be confident there's a difference as we'd expect this result randomly 18.7% of the time.
+
+** 1 vs 4 mean and variance
+
+We expect the mean and variance to show up as different:
+
+#+begin_src R :session R-tests :exports both :results output
+print(t.test(one, four))
+print(var.test(one, four))
+#+end_src
+
+We can be confident both statistics differ between the vectors as this result's unlikely to have occurred by chance.
+
+[[id:94633B07-27AF-411A-B6B2-C9FCB483F859][R tips]]
+
+[[file:sitemap.org][Sitemap]]

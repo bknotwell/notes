@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       d55b2ac2-307e-48b9-83bb-ffeca976b6bb
+:END:
+#+title: Symmetric Encryption Example
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+This is an easy example showing how to do symmetric encryption with [[https://openssl.org][OpenSSL]].
+
+Generate a key:
+
+#+begin_src sh
+openssl enc -aes-256-cbc -pass env:PASSPHRASE -P -md sha256 -iter 2000000 -pbkdf2 > keyfile
+#+end_src
+
+*NB:* the =-iter 2000000 -pbdkdf2= arguments increase the security of the
+=PASSPHRASE=. 
+
+Test the encryption and decryption of a short phrase:
+
+#+begin_src sh
+[ "$(echo 'hello world' | openssl enc -aes-256-cbc -a -K  $(sed '/^key=/!d;s/^.*=//' keyfile) -iv $(sed '/^iv =/!d;s/^.*=//' keyfile) |  openssl enc -aes-256-cbc -d -a -K  $(sed '/^key=/!d;s/^.*=//' keyfile) -iv $(sed '/^iv =/!d;s/^.*=//' keyfile))" = 'hello world' ]
+#+end_src
+
+[[id:da1d1468-4a7b-40b5-844b-1c4240917dab][Symmetric decryption in Python]]
+[[id:EF7019D9-AA93-43F1-8235-2034401FC5D2][OpenSSL tips]]
+[[file:sitemap.org][Sitemap]]

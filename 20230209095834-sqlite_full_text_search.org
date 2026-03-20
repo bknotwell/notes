@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       FDFDBA1F-65AB-4E4D-8103-6EF4EDC59711
+:END:
+#+title: SQLite full-text search
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+
+SQLite has multiple search methods available.  The latest one--[[https://www.sqlite.org/fts5.html][v5]]--can
+be setup in the following way:
+
+#+begin_src sh
+CREATE VIRTUAL TABLE notes USING FTS5(title, body, tokenize=porter);
+#+end_src
+
+The /porter/ setting turns on fuzzier matches.
+
+[[file:sitemap.org][Sitemap]]

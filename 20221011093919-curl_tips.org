@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       A9CFAE3E-52A0-49FE-8D5F-177F4EE60925
+:END:
+#+title: Curl tips
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+A place to put various [[https://curl.se/][curl or libcurl]] tips.
++ [[id:18BA7FF1-C87E-4DDA-8C90-9F34B4E7A907][Simple libcurl example]]
+
+[[id:6FECFB5F-F039-4E71-BAE3-C237A41FC6AB][Unix shell snippets]]
+
+[[file:sitemap.org][Sitemap]]
+

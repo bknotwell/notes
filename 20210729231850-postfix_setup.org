@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       8B4020B5-2E6C-4992-A537-254B2E9F2802
+:END:
+#+title: Postfix setup
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+SETUPFILE: ./latexcss.theme
+
+Notes on [[https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04][postfix setup]]:
+1. =postconf -e 'home_mailbox= Maildir/'=
+2. =postconf -e 'virtual_alias_maps= hash:/etc/postfix/virtual'=
+3. =vi /etc/postfix/virtual= and add entries like the example below.
+4. =postmap /etc/postfix/virtual=
+5. =firewall-cmd --zone=public --permanent --add-port=25/tcp=
+6. =firewall-cmd --reload=
+7. =vi /etc/postfix/main.fg= and set the =inet_interfaces= configuration setting.
+8. =yum install mutt=
+9. =vi /etc/hosts= and set your domainname.
+10. =vi /etc/postfix/main.cf= and add =knotwell.net= to the mydestination setting.
+
+Virtual mapping examples:
+#+begin_example
+admin@knotwell.net opc
+contact@knotwell.net opc
+knotwell@knotwell.net opc
+#+end_example
+
+Setup mutt by creating a =.muttrc= in =~opc=:
+#+begin_example
+set mbox_type=Maildir
+set folder="~/Maildir"
+
+set mask="!^\\.[^.]"
+set mbox="~/Maildir"
+set record="+.Sent"
+set postponed="+.Drafts"
+set spoolfile="~/Maildir"
+#+end_example
+
+[[file:sitemap.org][Sitemap]]
