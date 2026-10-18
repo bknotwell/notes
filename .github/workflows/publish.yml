@@ -42,7 +42,7 @@ jobs:
             any::ggplot2
             any::scales
 
-      - name: Install R and SQLite
+      - name: Install SQLite
         run: |
            sudo apt-get update
            sudo apt-get install -y sqlite3 libsqlite3-dev
