@@ -102,19 +102,19 @@ jobs:
                  (org-md-publish-to-md plist "./_sidebar.org" pubdir)
                  (org-md-publish-to-md plist filename pubdir))
 
-     (setq org-publish-project-alist
-       '(("roam"
-          :base-directory ".
-          :auto-sitemap t
-          :sitemap-function roam-sitemap
-          :sitemap-title "Roam notes"
-          :publishing-function roam-publication-wrapper
-          :publishing-directory "./public"
-          :section-number nil
-          :table-of-contents nil
-          :style "<link rel=\"stylesheet\" href=\"../other/mystyle.cs\" type=\"text/css\">")))
-          (org-publish "roam")
-          )"
+           (setq org-publish-project-alist
+           '(("roam"
+           :base-directory ".
+           :auto-sitemap t
+           :sitemap-function roam-sitemap
+           :sitemap-title "Roam notes"
+           :publishing-function roam-publication-wrapper
+           :publishing-directory "./public"
+           :section-number nil
+           :table-of-contents nil
+           :style "<link rel=\"stylesheet\" href=\"../other/mystyle.cs\" type=\"text/css\">")))
+           (org-publish "roam")
+           )"
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
