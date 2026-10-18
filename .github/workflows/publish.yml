@@ -24,7 +24,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Emacs
         uses: purcell/setup-emacs@master
@@ -46,7 +46,8 @@ jobs:
         run: |
            sudo apt-get update
            sudo apt-get install -y sqlite3 libsqlite3-dev
-   
+
+
       - name: Install Packages and Publish Site
         run: |
           emacs --batch --eval "(progn
@@ -88,19 +89,35 @@ jobs:
                           (error (message \"Failed to install %s: %s\" pkg err)))))))))
 
             (my/install-packages-from-orgs)
+            (defun roam-sitemap (title list)
+                  (progn (with-temp-file "./_sidebar.org"
+                     (insert "#+OPTIONS: toc:nil\n")
+                     (insert (org-list-to-org list)))
+                     (concat      "#+OPTIONS: ^:nil author:nil toc:nil html-postamble:nil\n"
+                                       "#+SETUPFILE: ./latexcss.theme\n"
+                                       "#+TITLE: " title "\n\n"
+                                       "Welcome to an eclectic collection of notes.\n"
+                         (org-list-to-org list))))
+              (defun roam-publication-wrapper (plist filename pubdir)
+                 (org-md-publish-to-md plist "./_sidebar.org" pubdir)
+                 (org-md-publish-to-md plist filename pubdir))
 
-            ;; Run your publishing logic
-            (if (file-exists-p \"publish.el\")
-                (progn
-                  (message \"Loading publish.el...\")
-                  (load-file \"publish.el\"))
-              ;; Fallback if no custom publish.el exists
-              (require 'ox-publish)
-              (org-publish-all t))
+     (setq org-publish-project-alist
+       '(("roam"
+          :base-directory ".
+          :auto-sitemap t
+          :sitemap-function roam-sitemap
+          :sitemap-title "Roam notes"
+          :publishing-function roam-publication-wrapper
+          :publishing-directory "./public"
+          :section-number nil
+          :table-of-contents nil
+          :style "<link rel=\"stylesheet\" href=\"../other/mystyle.cs\" type=\"text/css\">")))
+          (org-publish "roam")
           )"
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
@@ -113,4 +130,4 @@ jobs:
     steps:
        - name: Deploy to GitHub Pages
          id: deployment
-         uses: actions/deploy-pages@v4
+         uses: actions/deploy-pages@v5
