@@ -104,7 +104,7 @@ jobs:
 
            (setq org-publish-project-alist
            '(("roam"
-           :base-directory ".
+           :base-directory "."
            :auto-sitemap t
            :sitemap-function roam-sitemap
            :sitemap-title "Roam notes"
