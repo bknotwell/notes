@@ -1,0 +1,109 @@
+name: Publish Org-roam Site
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+# Set permissions required to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Emacs
+        uses: purcell/setup-emacs@v5
+        with:
+          version: 31.1
+
+      - name: Install R
+        uses: r-lib/action/setup-r@v2
+
+      - name: Install R packages
+        uses: r-lib/action/setup-r-dependencies@v2
+        with:
+          cache-version: 2
+          extra-packages:  |
+            any::ggplot2
+            any::scales
+
+      - name: Install R and SQLite
+         run: |
+           sudo apt-get update
+           sudo apt-get install -y sqlite3 libsqlite3-dev
+   
+      - name: Install Packages and Publish Site
+        run: |
+          emacs --batch --eval "(progn
+            ;; Initialize package manager and MELPA
+            (require 'package)
+            (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
+            (package-initialize)
+            (package-refresh-contents)
+
+            ;; Ensure essential publishing packages are available
+            (unless (package-installed-p 'htmlize) (package-install 'htmlize))
+            (unless (package-installed-p 'org-roam) (package-install 'org-roam))
+
+            ;; Automatically scan all .org files for third-party packages 
+            ;; declared via use-package or package-install and install them
+            (defun my/install-packages-from-orgs ()
+              (dolist (file (directory-files-recursively \".\" \"\\\\.org$$\"))
+                (with-temp-buffer
+                  (insert-file-contents file)
+                  ;; Search for use-package statements
+                  (goto-char (point-min))
+                  (while (re-search-forward \"(use-package[[:space:]]+\\\\([a-zA-Z0-9_-]+\\\\)\" nil t)
+                    (let ((pkg (intern (match-string 1))))
+                      (unless (or (package-installed-p pkg) 
+                                  (memq pkg package-built-in-packages))
+                        (message \"Installing package from org file: %s\" pkg)
+                        (condition-case err
+                            (package-install pkg)
+                          (error (message \"Failed to install %s: %s\" pkg err))))))
+                  ;; Search for explicit package-install calls
+                  (goto-char (point-min))
+                  (while (re-search-forward \"package-install[[:space:]]+['\\\\(]?\\\\([a-zA-Z0-9_-]+\\\\)\" nil t)
+                    (let ((pkg (intern (match-string 1))))
+                      (unless (or (package-installed-p pkg) 
+                                  (memq pkg package-built-in-packages))
+                        (message \"Installing package via package-install: %s\" pkg)
+                        (condition-case err
+                            (package-install pkg)
+                          (error (message \"Failed to install %s: %s\" pkg err)))))))))
+
+            (my/install-packages-from-orgs)
+
+            ;; Run your publishing logic
+            (if (file-exists-p \"publish.el\")
+                (progn
+                  (message \"Loading publish.el...\")
+                  (load-file \"publish.el\"))
+              ;; Fallback if no custom publish.el exists
+              (require 'ox-publish)
+              (org-publish-all t))
+          )"
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

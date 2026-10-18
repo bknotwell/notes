@@ -16,7 +16,7 @@ There are two ways to create a POSIX-compliant mutex in a script:
 
 Example code:
 
-#+begin_src h
+#+begin_src sh
 MAINPID=$$
 
 mutex_acquire() {
