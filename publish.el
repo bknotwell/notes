@@ -7,7 +7,8 @@
    ;; Ensure essential publishing packages are available
    (unless (package-installed-p 'htmlize) (package-install 'htmlize))
    (unless (package-installed-p 'org-roam) (package-install 'org-roam))
-   (unless (package-installed-p 'org-roam) (package-install 'ess))
+   (unless (package-installed-p 'ess) (package-install 'ess))
+   (require 'ess-mode)
    (require 'ob-R)
    (setq org-babel-load-languages '((R . t) (emacs-lisp . t) (shell . t) (python . t)))
    (setq org-confirm-babel-evaluate nil)
