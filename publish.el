@@ -10,6 +10,7 @@
    (unless (package-installed-p 'ess) (package-install 'ess))
    (require 'ess-mode)
    (require 'ob-R)
+   (require 'ob-shell)
    (setq org-babel-load-languages '((R . t) (emacs-lisp . t) (shell . t) (python . t)))
    (setq org-confirm-babel-evaluate nil)
 

@@ -13,7 +13,6 @@ Catalog tips for [[https://www.r-project.org/][R]]:
 + [[id:6098DEAE-6DAD-402D-8124-9EC853BC74D9][Combining R and shell scripts]]
 + [[id:B2E35F95-8A5C-49AC-8F48-EDDFE9C820CE][Estimating from a linear model]]
 + [[id:D74D157E-6A51-4058-A25C-7936103B542F][Download file from Kaggle w/o a browser]]
-+ [[id:38140766-8FFD-4023-B1EA-CE7FB1876790][World Cup Model]]
 + [[id:CA8E0FD0-621D-467E-8212-82890E98AB55][Broncos QB productivity]]
 + [[id:2C341950-9859-4574-9B72-0E2E3FA596F8][Layout graphics]]
 + [[id:FDD3B53E-52AE-48B3-B593-28BCE1A22BAA][Adding a superscript to a graph]]
