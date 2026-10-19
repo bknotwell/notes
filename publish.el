@@ -3,6 +3,9 @@
    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
    (package-initialize)
    (package-refresh-contents)
+   (require 'ob-R)
+   (setq org-babel-load-languages '((R . t) (emacs-lisp . t) (shell . t) (python . t)))
+   (setq org-confirm-babel-evaluate nil)
 
    ;; Ensure essential publishing packages are available
    (unless (package-installed-p 'htmlize) (package-install 'htmlize))
