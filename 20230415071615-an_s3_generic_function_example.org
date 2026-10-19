@@ -11,7 +11,7 @@ R has several object-oriented methods.  It's most basic is the [[http://adv-r.ha
 method that uses [[https://en.wikipedia.org/wiki/Generic_function][generic functions.]]  An example:
 
 #+NAME: genericfunction
-#+begin_src R :session BB :tangle tgen.R :shebang #!/usr/local/bin/Rscript :exports both :results output
+#+begin_src R  :exports both  :results output
   jump <- function(x, ...) UseMethod('jump')
   jump.human <- function(obj) '1 meter'
   jump.flea <- function(obj) '.005 meter'
@@ -30,10 +30,6 @@ method that uses [[https://en.wikipedia.org/wiki/Generic_function][generic funct
 
 Output:
 #+RESULTS: genericfunction
-: .005 meter
-: 1 meter
-: Error in UseMethod("jump") : 
-:   no applicable method for 'jump' applied to an object of class "frog"
 
 To see an object's class: src_r[:exports code]{attributes(objectinstance)$class}.
 
