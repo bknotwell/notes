@@ -11,7 +11,7 @@ dataset of [[https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war?se
 
 First load the dataset:
 
-#+begin_src R :session R-russian-casualties :var filename="c:/Users/bknot/AppData/Roaming/roam/russia_losses_personnel.csv" :exports both :results output graphics file :file russian-losses.svg
+#+begin_src R :session R-russian-casualties :var filename="./russia_losses_personnel.csv" :exports both :results output graphics file :file russian-losses.svg
   data <- read.csv(filename)
   data$Date <- as.Date(data$date)
   data$numdate <- as.numeric(data$Date, origin='1970-01-01')

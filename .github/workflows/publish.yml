@@ -47,6 +47,25 @@ jobs:
            sudo apt-get update
            sudo apt-get install -y sqlite3 libsqlite3-dev
 
+      - name: Download and Extract Kaggle Dataset
+        env:
+          KAGGLE_SECRET: ${{ secrets.KAGGLE }}
+        run: |
+          # 1. Extract credentials from the JSON secret and encode to Base64
+          AUTH=$(echo "$KAGGLE_SECRET" | jq -r '"\(.username):\(.key)"' | base64 -w 0)
+
+          # 2. Set API variables
+          USER='piterfm'
+          DATASET='2022-ukraine-russian-war'
+          ENDPOINT='https://www.kaggle.com/api/v1/datasets/download'
+
+          # 3. Get the redirect download URL
+          REDIR=$(curl -s -H "Authorization: Basic $AUTH" "$ENDPOINT/$USER/$DATASET" --write-out "%{redirect_url}" -o /dev/null)
+
+          # 4. Download and unzip the dataset
+          curl -sL "$REDIR" -o dataset.zip
+          unzip dataset.zip
+          rm dataset.zip
 
       - name: Install Packages and Publish Site
         run: |
