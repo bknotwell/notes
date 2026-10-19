@@ -61,6 +61,7 @@
          :style "<link rel=\"stylesheet\" href=\"../other/mystyle.cs\" type=\"text/css\">")))
 
          ;; build org-roam DB
+         (setq org-roam-directory ".")
          (progn (org-id-update-id-locations)
                 (org-roam-db-sync)
                 (org-roam-update-org-id-locations))
