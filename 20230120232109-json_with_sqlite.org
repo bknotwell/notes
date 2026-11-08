@@ -3,7 +3,6 @@
 :END:
 #+title: JSON with SQLite
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Sqlite's [[https://www.sqlite.org/json1.html][JSON]] support is easy to use to dissect JSON API responses.
 It's slow without creating [[id:5B913FD2-F70F-485A-9C76-CD4CC669D8B5][SQLite virtual columns with indices]].

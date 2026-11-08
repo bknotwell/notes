@@ -3,7 +3,6 @@
 :END:
 #+title: Display Postgres Stored Procedure
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 You can display the [[https://tableplus.com/blog/2018/08/postgresql-how-to-show-stored-procedure.html][code]] from a running stored procedure in the

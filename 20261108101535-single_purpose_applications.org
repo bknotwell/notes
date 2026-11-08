@@ -1,0 +1,113 @@
+:PROPERTIES:
+:ID:       95cacba9-3291-479e-97d2-2068b9a1ce9c
+:END:
+#+title: Single-purpose applications
+#+OPTIONS: ^:nil author:nil html-postamble:nil
+#+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
+
+LLMs have enabled something new—they make it viable to build a
+specialized application for a single meeting or task.  You can get an
+insane value for a shockingly inexpensive token spend,  Some of my
+most recent examples.
+
+*NB:* number are in US dollars.
+
+** gitlab pipeline/job status dashboard
+
+I created a full-featured pipeline and job dashboard using [[https://www.r-project.org/][R]] and
+[[https://pkgs.rstudio.com/shiny/][shiny.]]  For ~$35, I got a simple framework that converted an existing
+SQLite database to [[https://duckdb.org/][DuckDB]], three tabs—a /Pipeline/ tab, a /Job info/ tab
+and a /Job/ tab as well as complete and detailed Markdown content for
+inclusion in the /Info/ tab.  Everything was orchestrated by a single
+LLM-generated /Makefile./
+
+One think I particularly enjoyed about this is that the LLM-generated
+content introduced me to the [[https://www.statisticshowto.com/mann-kendall-trend-test/][Mann-kendall trend]] test.
+
+** memory comparison dashboard
+
+This dashboard compared memory usage between software releases with an
+internal architecture conceptually similar to the previous dashboard
+with several exceptions:
+
++ it had significantly smaller scope and cost ~$4 in tokens.
++ there was a data cleanup and conversion component that utilized an
+  existing Python script.
+
+** calibration meeting helper
+
+At review time, we do calibration meetings across my organization to
+ensure cross-team consistency.  Prior to the meeting, I asked /how
+will we organize this?/   My initial thought was a spreadsheet but
+that wasn't satisfying as it's enforcing consistent data input is
+unwieldy.  So about an hour prior to the meeting, I created a
+spreadsheet as a backup and started putting together an app that did
+the following:
+
+1. Added tables to an existing employee database I had courtesy of a
+   download using /LDAP./
+2. Created an /ncurses/ application with database-driven validation for
+   the fields in the calibration.
+
+Outcome:  after ~$5 in token spend and 55 minutes, I had an
+application that had an almost[fn::I hadn't tested with a large number
+of employees and hasn't asked for a "page down" capability.] perfect
+workflow for the meeting.
+
+** amazon-style roulette wheel
+
+I stole a concept—the [[https://aws.amazon.com/blogs/opensource/the-wheel/][wheel]]—that I'd seen at OCI and that originated
+at AWS' operations meeting.  Starting at 0705 for a 0715 meeting, I
+prompted CoPilot to generate a wheel with customizable targets
+
+Outcome:  after spending ~$1 in tokens and six minutes, I started
+inputting the target names at 0711.
+
+** gitlab failed job exporter
+
+I was working through a large migration for a set of functional tests
+executed in a gitlab runner.  My initial workflow was the following:
+
+1. Cmd-click the failed job.
+2. Go to the tab and click /Download./
+3 Go to the /~/Downloads/ directory.
+4. Make a temporary directory, move the downloaded zip file into the
+   directory and unzip it.
+5.  Start looking at the data.
+
+Since the initial migration had dozens of failing suites, this was untenable.
+
+For ~$8 in tokens, I created an ncurses-based application that did the
+following:
+
+1. Downloaded a failed pipeline's failed jobs with their logs and
+   artifacts.
+2. Put the logs in a SQLite [[https://sqlite.org/fts5.html][FTS5]] table so they could be easily
+   searched.
+3. Put the downloaded artifacts into a [[https://sqlite.org/sqlar/doc/trunk/README.md][sqlar-compatible]] table so they
+   can be easily extracted and/or searched.
+4. Used Python's [[https://cmd2.readthedocs.io/en/latest/][Cmd2]] module to create an interactive job shell that
+   orchestrated the setup for the /ncurses/ application.
+5. Generated a complete interactive workflow for the user who needed
+   to search logs or artifacts.
+6. Added a simple automated failure analysis.
+7. Created a tiny bit of infrastructure to export failures in a format
+   suitable for pasting into CoPilot.
+
+** Learnings
+
+- reproducibility :: I don't really care too much as they were quick
+  to create but I've adopted a pattern of having the initial prompts
+  added into the application as either comments or as part of a
+  dashboard's /Info/ tab.
+- source control :: I initially never bothered as they were throwaway
+  applications but I realized that [[https://orgmode.org/worg/org-contrib/babel/intro.html][org-babel's]] [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]] combined with
+  github/gitlab pages were a stellar way to communicate what, how and
+  why to others.
+- niche environments/utilities :: I occasionally used less common
+  utilities (e.g. [[http://gnuplot.info/][gnuplot]]) to test how much adoption matters.
+  Anecdotally, I'm convinced that tool choice doesn't matter.
+- old technology :: two of the applications used Python's internal
+  [[https://en.wikipedia.org/wiki/Ncurses][ncurses]] library that I would've never used otherwise.
+
+[[file:sitemap.org][Sitemap]]

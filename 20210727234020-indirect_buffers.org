@@ -2,7 +2,6 @@
 :ID:       B97E50CA-9595-46A9-9A7A-54DC25F32CE1
 :END:
 #+title: Indirect buffers
-#+SETUPFILE: ./latexcss.theme
 #+OPTIONS:  author:nil ^:nil html-postamble:nil
  
 Emacs has an [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Indirect-Buffers.html][Indirect Buffer]] capability that makes it so you can have

@@ -3,7 +3,6 @@
 :END:
 #+title: Regular expression building and replacement
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Text replacement via regexp in a buffer can be easily [[https://karthinks.com/software/bridging-islands-in-emacs-1][performed]] by the following method:

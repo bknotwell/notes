@@ -3,7 +3,6 @@
 :END:
 #+title: Advise a function and modify temporary buffer content
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Emacs can transparently augment [[https://scripter.co/emacs-lisp-advice-combinators/][functions]] using [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html][advice]].   Example:

@@ -3,7 +3,6 @@
 :END:
 #+title: Generating static library with ar
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Create an libxxx.a in the following way:
 

@@ -3,7 +3,6 @@
 :END:
 #+title: EFS traffic through a ssh tunnel
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 An EFS filesystem can be mounted to a local machine in the following

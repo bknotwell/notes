@@ -3,7 +3,6 @@
 :END:
 #+title: Extract links from html with Lua and pandoc
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 It's easy to parse HTML files using [[https://www.lua.org][Lua]] [[https://pandoc.org/lua-filters.html#introduction][filters]] in [[https://pandoc.org][pandoc]].  The

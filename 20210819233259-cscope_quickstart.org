@@ -3,7 +3,6 @@
 :END:
 #+title: Cscope quickstart
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 
 The [[http://cscope.sourceforge.net/][cscope]] utility is helpful for source code indexing and search.

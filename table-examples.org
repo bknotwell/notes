@@ -2,7 +2,6 @@
 :ID:       B5EDDA1D-70EB-49E2-BBD0-8CE8B3861ED7
 :END:
 #+TITLE: Table examples
-#+SETUPFILE: ./latexcss.theme
 #+OPTIONS: author:nil ^:nil html-postamble:nil
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 

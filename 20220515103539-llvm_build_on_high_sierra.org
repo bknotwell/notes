@@ -3,7 +3,6 @@
 :END:
 #+title: LLVM build on High Sierra
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Trying to update poppler, you're required to rebuild llvm13 which
 breaks by default on High Sierra.  Looking around, you find the

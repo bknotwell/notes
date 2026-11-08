@@ -3,7 +3,6 @@
 :END:
 #+title: PagerDuty API token setup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 From your main PagerDuty login, click the user icon and select /My
 Profile/.  From the /User Settings/ tab, you will see a /Create API User

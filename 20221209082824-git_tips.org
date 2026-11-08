@@ -3,7 +3,6 @@
 :END:
 #+title: Git tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 * Pushing to a remote branch
 

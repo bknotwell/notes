@@ -3,7 +3,6 @@
 :END:
 #+title: Confluence api cheatsheet
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 Some nuggets of code that make the [[https://atlassian-python-api.readthedocs.io/confluence.html][confluence API]] approachable.
 

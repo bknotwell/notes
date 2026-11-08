@@ -3,7 +3,6 @@
 :END:
 #+title: Switch orgmode table to table-mode
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Orgmode tables have a rudimentary formatting and won't do multi-line
 tables.  If you switch to /table-mode/, you have more editing options

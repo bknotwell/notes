@@ -3,7 +3,6 @@
 :END:
 #+title: Postfix setup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Notes on [[https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04][postfix setup]]:
 1. =postconf -e 'home_mailbox= Maildir/'=

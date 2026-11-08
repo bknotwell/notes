@@ -3,7 +3,6 @@
 :END:
 #+title: Org documents with a built-in table of contents
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 1. Install /org-make-toc/ ([[https://github.com/alphapapa/org-make-toc][GitHub - alphapapa/org-make-toc: Automatic
    tables of contents for Org files]]) from melpa.

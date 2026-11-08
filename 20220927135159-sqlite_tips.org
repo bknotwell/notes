@@ -3,7 +3,6 @@
 :END:
 #+title: SQLite tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Accumulate small snippets of [[https://www.sqlite.org][SQLite]] tips:
 + [[id:45E9CA53-9286-458A-9BFB-3DE73624F2CD][SQLite table to CSV]]

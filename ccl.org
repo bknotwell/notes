@@ -2,7 +2,6 @@
 :ID:       F51A27A8-0D11-4CC0-9AB5-18B2194964A8
 :END:
 #+TITLE:  Installing Clozure Common Lisp
-#+SETUPFILE: ./latexcss.theme
 #+OPTIONS:  author:nil ^:nil html-postamble:nil
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 

@@ -3,7 +3,6 @@
 :END:
 #+title: Convert svg to emf
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 [[https://inkscape.org/][Inkscape]] can be used to convert svg files to emf files with a command
 like the following:

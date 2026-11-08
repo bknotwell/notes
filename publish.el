@@ -45,10 +45,10 @@
          (progn (with-temp-file "./_sidebar.org"
                   (insert "#+OPTIONS: toc:nil\n")
                   (insert (org-list-to-org list)))
-                  (concat      "#+OPTIONS: ^:nil author:nil toc:nil html-postamble:nil\n"
+                  (concat     "#+OPTIONS: ^:nil author:nil toc:nil html-postamble:nil\n"
                                    "#+SETUPFILE: ./latexcss.theme\n"
                                    "#+TITLE: " title "\n\n"
-                                   "Welcome to an eclectic collection of notes.\n"
+                                   "Welcome to an eclectic collection of notes generated from this [repo](https://github.com/bknotwell/notes),  this [action](https://github.com/bknotwell/notes/blob/main/.github/workflows/publish.yml) and this emacs lisp [code](https://github.com/bknotwell/notes/blob/main/publish.el)."
                                (org-list-to-org list))))
             (defun roam-publication-wrapper (plist filename pubdir)
                (org-md-publish-to-md plist "./_sidebar.org" pubdir)

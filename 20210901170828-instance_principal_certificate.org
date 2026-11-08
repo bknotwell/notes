@@ -3,7 +3,6 @@
 :END:
 #+title: Instance principal certificate
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 To access the certificates on the OCI instances:
 

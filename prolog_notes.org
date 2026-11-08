@@ -2,7 +2,6 @@
 :ID:       1E9E2FE1-BBD2-4F43-BB7A-A5D029768685
 :END:
 #+TITLE:  Notes on Prolog
-#+SETUPFILE: latexcss.theme
 #+OPTIONS:  author:nil ^:nil  html-postamble:nil
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 

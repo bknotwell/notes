@@ -3,7 +3,6 @@
 :END:
 #+title: Calling Emacs lisp as a script
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Use the =--batch= and =-q= options to execute a script from the CLI:
 

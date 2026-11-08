@@ -3,7 +3,6 @@
 :END:
 #+title: ed tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 * Background
 The original Unix text editor is [[https://en.wikipedia.org/wiki/Ed_(software)][ed]].  It's worth knowing even if you

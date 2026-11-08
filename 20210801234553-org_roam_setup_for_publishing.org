@@ -3,7 +3,6 @@
 :END:
 #+title: Org-roam setup for publishing
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 
@@ -21,7 +20,6 @@ The configuration snippet below will setup org-roam and get it ready to publish 
 
   (defun roam-sitemap (title list)
     (concat "#+OPTIONS: ^:nil author:nil html-postamble:nil\n"
-	    "#+SETUPFILE: ./latexcss.theme\n"
 	    "#+TITLE: " title "\n\n"
 	    (org-list-to-org list) "\nfile:sitemap.svg"))
 
@@ -47,7 +45,7 @@ The configuration snippet below will setup org-roam and get it ready to publish 
   (setq org-roam-capture-templates
 	'(("d" "default" plain "%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			      "#+title: ${title}\n#+OPTIONS: ^:nil author:nil html-postamble:nil\n#+SETUPFILE: ./latexcss.theme\n\n\n[[file:sitemap.org][Sitemap]]")
+			      "#+title: ${title}\n#+OPTIONS: ^:nil author:nil html-postamble:nil\n\n[[file:sitemap.org][Sitemap]]")
 	   :unnarrowed t)))
 
   (defun org-roam-custom-link-builder (node)

@@ -3,7 +3,6 @@
 :END:
 #+title: SQLite virtual columns with indices
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 SQLite supports [[https://www.sqlite.org/gencol.html][generated columns]] which can be combined with indexes
 to significantly increase JSON query performance.

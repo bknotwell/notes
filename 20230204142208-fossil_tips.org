@@ -3,7 +3,6 @@
 :END:
 #+title: Fossil tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 A place for [[https://fossil-scm.org][Fossil]] tips:
 

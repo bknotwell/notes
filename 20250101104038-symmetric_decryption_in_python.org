@@ -3,7 +3,6 @@
 :END:
 #+title: Symmetric decryption in Python
 #+OPTIONS: ^:nil author:nil html-postamble:nil toc:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 A decryption example using Python's [[https://pypi.org/project/cryptography/][cryptography]] package.

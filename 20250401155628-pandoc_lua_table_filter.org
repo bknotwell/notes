@@ -3,7 +3,6 @@
 :END:
 #+title: Pandoc lua table filter
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 The code below takes a pandoc [[https://pandoc.org/chunkedhtml-demo/8.9-tables.html][table]] and creates N files (N == #rows)

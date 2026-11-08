@@ -3,7 +3,6 @@
 :END:
 #+title: Valgrind memory checking
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 [[https://valgrind.org][Valgrind]] can be used to check for memory leaks but it can also tell
 you when you're accessing memory that's not yours:

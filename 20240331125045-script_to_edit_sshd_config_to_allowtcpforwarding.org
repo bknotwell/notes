@@ -3,7 +3,6 @@
 :END:
 #+title: Script to edit sshd_config to /AllowTcpForwarding/
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Use the [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ed.html][ed]] line-editor to open the file, find the appropriate line,

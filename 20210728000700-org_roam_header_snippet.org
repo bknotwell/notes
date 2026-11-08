@@ -3,12 +3,10 @@
 :END:
 #+title: Org-roam header snippet
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 To ensure the HTML is styled correctly, all notes should contain the following lines:
 #+begin_example
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+end_example
 
 [[id:EC04385C-66D6-443E-B5B1-048F5266C836][Emacs Tips]]

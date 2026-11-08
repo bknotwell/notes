@@ -2,7 +2,6 @@
 :ID:       A39C905E-39AF-49F1-A5E6-295422A2FF37
 :END:
 #+TITLE:  Setting up nginx
-#+SETUPFILE: latexcss.theme
 #+OPTIONS:  author:nil ^:nil  html-postamble:nil
 
 All as root:

@@ -3,7 +3,6 @@
 :END:
 #+title: Org-mode longtable
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 When exporting to LaTeX and you need a larger than a single page
 table:

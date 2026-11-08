@@ -3,7 +3,6 @@
 :END:
 #+title: Installing R on Oracle Linux 8
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Oracle Linux doesn't have the Extra Packages for Enterprise Linux
 (epel) installed by default.  Run the following command to install:

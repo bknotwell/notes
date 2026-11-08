@@ -3,7 +3,6 @@
 :END:
 #+title: AT job scheduling
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 The [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/at.html][at]] utility is related to cron (it's run with a 5 minute lag by

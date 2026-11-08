@@ -3,7 +3,6 @@
 :END:
 #+title: Updating elpa keyring
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 It took a decent amount of work to get emacs' package refresh to work on Windows:

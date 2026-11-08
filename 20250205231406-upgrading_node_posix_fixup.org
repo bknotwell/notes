@@ -3,7 +3,6 @@
 :END:
 #+title: Upgrading node POSIX fixup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 After upgrading node (might be FreeBSD-specific), shiny might have

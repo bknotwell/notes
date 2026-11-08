@@ -3,7 +3,6 @@
 :END:
 #+title: Command-line weather
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 To get a weather report from the CLI:
 

@@ -3,7 +3,6 @@
 :END:
 #+title: Shiny on Heroku
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Making a [[https://shiny.posit.co/][Shiny]] app on [[https://www.john-mcallister.com/deploy-r-shiny-applications-on-heroku/][heroku]] can be easily done but heroku serves up

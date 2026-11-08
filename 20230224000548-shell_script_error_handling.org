@@ -3,7 +3,6 @@
 :END:
 #+title: Shell script error handling
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 If you want a shell script to exit on the first error:
 

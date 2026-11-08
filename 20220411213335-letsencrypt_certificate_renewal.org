@@ -3,7 +3,6 @@
 :END:
 #+title: Letsencrypt certificate renewal
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 To [[https://docs.digitalocean.com/support/how-can-i-renew-lets-encrypt-certificates/][renew]] the certificate, login, =su= to root and run the following
 command: =certbot renew=.

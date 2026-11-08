@@ -3,7 +3,6 @@
 :END:
 #+title: Elisp tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Various nuggets of information on elisp:
 + [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Variables.html][defvar]] only sets the variable's value the first time.  After that, use setq or restart Emacs.

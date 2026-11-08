@@ -3,7 +3,6 @@
 :END:
 #+title: Unix tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 General Unix tips:
 

@@ -1,5 +1,4 @@
 #+TITLE:  Setup org-protocol
-#+SETUPFILE: latexcss.theme
 #+OPTIONS: author:nil html-postamble:nil
 
 * Setting up the application

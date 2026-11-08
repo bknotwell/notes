@@ -3,7 +3,6 @@
 :END:
 #+title: Local python3 logging webserver
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 The code below implements a simple HTTP server that listens on

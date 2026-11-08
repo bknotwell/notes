@@ -2,7 +2,6 @@
 :ID:       51AB1ED4-2345-471B-B30C-8DD7032F0B1B
 :END:
 #+title: Spaces in org-roam node names
-#+SETUPFILE: ./latexcss.theme
 #+OPTIONS:  author:nil ^:nil html-postamble:nil
 Depending on what completion mechanism you use, you might have trouble
 putting inputting spaces in the title.  Hitting {Ctrl-q SPC} might

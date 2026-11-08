@@ -3,7 +3,6 @@
 :END:
 #+title: Table Spreadsheet Editing
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Editing per cell table formulas can be done far more easily by doing

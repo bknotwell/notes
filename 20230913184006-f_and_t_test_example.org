@@ -3,7 +3,6 @@
 :END:
 #+title: F and t test example
 #+OPTIONS: ^:nil author:nil html-postamble:nil num:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 This document shows how to compare means and variances in a rigorous

@@ -3,7 +3,6 @@
 :END:
 #+title: SQLite upsert
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 [[https://www.sqlite.org][Sqlite]] has an [[https://www.sqlite.org/lang_UPSERT.html][upsert]] capability that makes it easy to write code that
 either inserts a row or updates it if it exists already.

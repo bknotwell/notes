@@ -3,7 +3,6 @@
 :END:
 #+title: Installing Shiny Server on AARM64
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Since there are no Shiny Server packages for AARM64, you need to build
 it yourself.  You start with these [[https://github.com/rstudio/shiny-server/wiki/Building-Shiny-Server-from-Source][directions]] but you need to make one

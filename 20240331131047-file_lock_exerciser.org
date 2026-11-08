@@ -3,7 +3,6 @@
 :END:
 #+title: File lock exerciser
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 The code below was used to exercise file locks on a V4 NFS filesystem.

@@ -3,7 +3,6 @@
 :END:
 #+title: R tips
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Catalog tips for [[https://www.r-project.org/][R]]:
 

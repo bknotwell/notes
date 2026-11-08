@@ -3,7 +3,6 @@
 :END:
 #+title: Website setup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 A checklist for setting up a new virtual machine with my ipeds
 application as well as my notes.  Instructions are specific to

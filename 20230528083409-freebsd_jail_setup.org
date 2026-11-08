@@ -3,7 +3,6 @@
 :END:
 #+title: FreeBSD jail setup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Using [[https://bastillebsd.org/getting-started/][Bastille]] to manage jails
 

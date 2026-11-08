@@ -3,7 +3,6 @@
 :END:
 #+title: Simple docker build routine
 #+OPTIONS: ^:nil author:nil html-postamble:nil toc:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 Using Docker to build can be super-easy with GNU make (*NB:* assume the

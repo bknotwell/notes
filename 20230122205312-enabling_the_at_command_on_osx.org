@@ -3,7 +3,6 @@
 :END:
 #+title: Enabling the at command on OSX
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 You must enable the =atrun= command:
    =sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.atrun.plist=

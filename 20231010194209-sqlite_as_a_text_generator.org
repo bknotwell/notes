@@ -3,7 +3,6 @@
 :END:
 #+title: SQLite as a text generator
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 #+HTML_HEAD_EXTRA: <style> pre.src { background-color: black; color: white; }</style>
 
 SQLite can be to generate complex text output by setting the query

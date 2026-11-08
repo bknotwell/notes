@@ -3,7 +3,6 @@
 :END:
 #+title: FreeBSD R setup
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Setting up R on FreeBSD requires a single command: =pkg install R=
 

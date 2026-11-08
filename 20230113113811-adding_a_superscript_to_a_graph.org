@@ -3,7 +3,6 @@
 :END:
 #+title: Adding a superscript to a graph
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 See two methods below to add text to a graph:
 

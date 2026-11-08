@@ -2,7 +2,6 @@
 :ID:       EC04385C-66D6-443E-B5B1-048F5266C836
 :END:
 #+title: Emacs tips
-#+SETUPFILE: ./latexcss.theme
 #+OPTIONS:  author:nil ^:nil html-postamble:nil
 
 Nuggets of information on Emacs:

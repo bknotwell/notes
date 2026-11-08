@@ -3,7 +3,6 @@
 :END:
 #+title: Keyboard Macros
 #+OPTIONS: ^:nil author:nil html-postamble:nil
-#+SETUPFILE: ./latexcss.theme
 
 Main [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Keyboard-Macro.html][documentation]].  Excellent [[https://www.masteringemacs.org/article/keyboard-macros-are-misunderstood][article.]]
 
