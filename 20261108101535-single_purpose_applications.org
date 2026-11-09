@@ -80,18 +80,18 @@ Since the initial migration had dozens of failing suites, this was untenable.
 For ~$8 in tokens, I created an ncurses-based application that did the
 following:
 
-1. Downloaded a failed pipeline's failed jobs with their logs and
++ Downloaded a failed pipeline's failed jobs with their logs and
    artifacts.
-2. Put the logs in a SQLite [[https://sqlite.org/fts5.html][FTS5]] table so they could be easily
-   searched.
-3. Put the downloaded artifacts into a [[https://sqlite.org/sqlar/doc/trunk/README.md][sqlar-compatible]] table so they
-   can be easily extracted and/or searched.
-4. Used Python's [[https://cmd2.readthedocs.io/en/latest/][Cmd2]] module to create an interactive job shell that
++ Put the logs in a SQLite [[https://sqlite.org/fts5.html][FTS5]] table so they could be easily
+  searched.
++ Put the downloaded artifacts into a [[https://sqlite.org/sqlar/doc/trunk/README.md][sqlar-compatible]] table so they
+  can be easily extracted and/or searched.
++ Used Python's [[https://cmd2.readthedocs.io/en/latest/][Cmd2]] module to create an interactive job shell that
    orchestrated the setup for the /ncurses/ application.
-5. Generated a complete interactive workflow for the user who needed
++ Generated a complete interactive workflow for the user who needed
    to search logs or artifacts.
-6. Added a simple automated failure analysis.
-7. Created a tiny bit of infrastructure to export failures in a format
++ Added a simple automated failure analysis.
++ Created a tiny bit of infrastructure to export failures in a format
    suitable for pasting into CoPilot.
 
 ** Jira issue shell
