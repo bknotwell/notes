@@ -7,10 +7,10 @@
 
 LLMs have enabled something new—they make it viable to build a
 specialized application for a single meeting or task.  You can get an
-insane value for a shockingly inexpensive token spend,  Some of my
-most recent examples.
+insane value for a shockingly inexpensive token spend and modest time
+investment.  Some recent examples are detailed below.
 
-*NB:* number are in US dollars.
+**NB:** number are in US dollars.
 
 ** gitlab pipeline/job status dashboard
 
