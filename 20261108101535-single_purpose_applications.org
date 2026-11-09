@@ -70,7 +70,7 @@ executed in a gitlab runner.  My initial workflow was the following:
 
 1. Cmd-click the failed job.
 2. Go to the tab and click /Download./
-3 Go to the /~/Downloads/ directory.
+3. Go to the /~/Downloads/ directory.
 4. Make a temporary directory, move the downloaded zip file into the
    directory and unzip it.
 5.  Start looking at the data.
@@ -94,6 +94,16 @@ following:
 7. Created a tiny bit of infrastructure to export failures in a format
    suitable for pasting into CoPilot.
 
+** Jira issue shell
+
+When I found myself creating Jira issues repeatedly, I decided to
+generate a command shell that allowed me to easily interact with Jira
+for a small number of usecases.  Beyond the interactive usage, having
+a custom shell enabled simple scripts.
+
+Outcome:  after ~$5 in token spend and an hour, I had an app that fit
+my limited needs perfectly.
+
 ** Learnings
 
 - reproducibility :: I don't really care too much as they were quick
@@ -109,5 +119,8 @@ following:
   Anecdotally, I'm convinced that tool choice doesn't matter.
 - old technology :: two of the applications used Python's internal
   [[https://en.wikipedia.org/wiki/Ncurses][ncurses]] library that I would've never used otherwise.
+- custom shells are under-utilized ::  Custom shells are easy to
+  write, general and flexible so people should do them routinely but
+  almost no one does.
 
 [[file:sitemap.org][Sitemap]]
