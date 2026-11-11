@@ -121,6 +121,10 @@ my limited needs perfectly.
   [[https://en.wikipedia.org/wiki/Ncurses][ncurses]] library that I would've never used otherwise.
 - custom shells are under-utilized ::  Custom shells are easy to
   write, general and flexible so people should do them routinely but
-  almost no one does.
+  almost no one does.  Beyond the Jira shell above, I've created
+  shells that automated key rotation operations and have a vision of a
+  /developer operations/ shell that's used to institutionalize
+  onboarding or common developer operations (e.g. setting up multiple
+  product versions running in virtual machines).
 
 [[file:sitemap.org][Sitemap]]
